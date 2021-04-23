@@ -9,6 +9,4 @@ dependencies {
 	api "io.github.libktx:ktx-graphics:$ktxVersion"
 	api "io.github.libktx:ktx-ashley:$ktxVersion"
 	api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-	api "io.github.libktx:ktx-box2d:$ktxVersion"
-	api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 }

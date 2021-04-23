@@ -7,20 +7,20 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
-import io.github.rolodophone.ludumdare48.screen.BrickBreakerScreen
 import io.github.rolodophone.ludumdare48.screen.GameScreen
+import io.github.rolodophone.ludumdare48.screen.MyScreen
 import ktx.app.KtxGame
 import ktx.log.debug
 import ktx.log.logger
 
 private const val BATCH_SIZE = 1000
 
-private val log = logger<BrickBreaker>()
+private val log = logger<MyGame>()
 
-class BrickBreaker: KtxGame<BrickBreakerScreen>() {
+class MyGame: KtxGame<MyScreen>() {
 	val gameViewport = FitViewport(180f, 320f)
 	lateinit var batch: Batch
-	lateinit var brickBreakerTextures: BrickBreakerTextures
+	lateinit var myTextures: MyTextures
 	lateinit var engine: Engine
 
 	override fun create() {
@@ -28,7 +28,7 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 
 		//init stuff
 		batch = SpriteBatch(BATCH_SIZE)
-		brickBreakerTextures = BrickBreakerTextures()
+		myTextures = MyTextures()
 		engine = PooledEngine()
 
 		addScreen(GameScreen(this))
@@ -46,6 +46,6 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 		}
 		batch.dispose()
 
-		brickBreakerTextures.dispose()
+		myTextures.dispose()
 	}
 }

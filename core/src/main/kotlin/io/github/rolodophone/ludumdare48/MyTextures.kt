@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.Disposable
 
 @Suppress("unused","PropertyName")
-class BrickBreakerTextures: Disposable {
+class MyTextures: Disposable {
 	private val graphicsAtlas = TextureAtlas(Gdx.files.internal("graphics/graphics.atlas"))
 
 	val ball = graphicsAtlas.findRegion("ball")!!
