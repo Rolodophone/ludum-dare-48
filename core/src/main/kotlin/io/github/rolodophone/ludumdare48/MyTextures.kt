@@ -9,11 +9,14 @@ class MyTextures: Disposable {
 	private val graphicsAtlas = TextureAtlas(Gdx.files.internal("graphics/graphics.atlas"))
 
 	val grid8 = graphicsAtlas.findRegion("grid8")!!
-	val block_dirt = List(2) { graphicsAtlas.findRegion("block_dirt$it") }
-	val dog_dig_down = List(4) { graphicsAtlas.findRegion("dog_dig_down$it") }
-	val dog_dig_left = List(6) { graphicsAtlas.findRegion("dog_dig_left$it") }
-	val dog_dig_right = List(6) { graphicsAtlas.findRegion("dog_dig_right$it") }
-	val dog_rest = List(2) { graphicsAtlas.findRegion("dog_rest$it") }
+	val background = graphicsAtlas.findRegion("background")!!
+	val block_background = graphicsAtlas.findRegion("block_background")!!
+	val block_dirt = List(2) { graphicsAtlas.findRegion("block_dirt$it")!! }
+	val dog_dig_down = List(4) { graphicsAtlas.findRegion("dog_dig_down$it")!! }
+	val dog_dig_left = List(6) { graphicsAtlas.findRegion("dog_dig_left$it")!! }
+	val dog_dig_right = List(6) { graphicsAtlas.findRegion("dog_dig_right$it")!! }
+	val dog_rest = List(2) { graphicsAtlas.findRegion("dog_rest$it")!! }
+	val tile_highlight = List(2) { graphicsAtlas.findRegion("tile_highlight$it")!! }
 
 	override fun dispose() {
 		graphicsAtlas.dispose()

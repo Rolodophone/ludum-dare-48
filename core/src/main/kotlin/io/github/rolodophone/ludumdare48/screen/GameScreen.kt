@@ -2,14 +2,8 @@ package io.github.rolodophone.ludumdare48.screen
 
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.ludumdare48.MyGame
-import io.github.rolodophone.ludumdare48.ecs.component.AnimationComponent
-import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
-import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
-import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
-import io.github.rolodophone.ludumdare48.ecs.system.AnimationSystem
-import io.github.rolodophone.ludumdare48.ecs.system.DebugSystem
-import io.github.rolodophone.ludumdare48.ecs.system.PlayerInputSystem
-import io.github.rolodophone.ludumdare48.ecs.system.RenderSystem
+import io.github.rolodophone.ludumdare48.ecs.component.*
+import io.github.rolodophone.ludumdare48.ecs.system.*
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -22,11 +16,23 @@ private const val MAX_DELTA_TIME = 1/10f
 private const val NUM_COLUMNS = 6
 private const val NUM_ROWS = 9
 
+const val TILE_WIDTH = 30
+
 class GameScreen(game: MyGame): MyScreen(game) {
 	private val gameEventManager = GameEventManager()
 
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
+		engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(textures.background)
+				rect.setPosition(0f, gameViewport.worldHeight - textures.background.regionHeight)
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.background)
+			}
+		}
+
 		for (y in 0 until NUM_ROWS) {
 			for (x in 0 until NUM_COLUMNS) {
 				
@@ -36,8 +42,8 @@ class GameScreen(game: MyGame): MyScreen(game) {
 					with<TransformComponent> {
 						setSizeFromTexture(thisTexture)
 						rect.setPosition(
-							(x * thisTexture.regionWidth).toFloat(), 
-							(y * thisTexture.regionHeight).toFloat()
+							(x * TILE_WIDTH).toFloat(),
+							(y * TILE_WIDTH).toFloat()
 						)
 					}
 					with<GraphicsComponent> {
@@ -57,7 +63,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		val dog = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.dog_rest[0])
-				rect.setPosition(2f * textures.block_dirt[0].regionWidth, 9f * textures.block_dirt[0].regionHeight)
+				rect.setPosition(2f * TILE_WIDTH, 9f * TILE_WIDTH)
 			}
 			with<GraphicsComponent> {
 				sprite.setRegion(textures.dog_rest[0])
@@ -68,14 +74,16 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			}
 			with<AnimationComponent> {
 				textureList = textures.dog_rest
-				frameDuration = 0.25f
+				frameDuration = 1/4f
 			}
+			with<DogComponent>()
 		}
 
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
 			addSystem(AnimationSystem())
 			addSystem(RenderSystem(batch, gameViewport))
+			addSystem(DigSystem(gameEventManager, textures, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures))
 		}
 	}
