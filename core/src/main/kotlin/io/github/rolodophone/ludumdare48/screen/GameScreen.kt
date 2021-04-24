@@ -23,7 +23,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
 			addSystem(RenderSystem(batch, gameViewport))
-			addSystem(DebugSystem(gameEventManager, gameViewport))
+			addSystem(DebugSystem(gameEventManager, gameViewport, textures))
 		}
 	}
 

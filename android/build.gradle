@@ -125,7 +125,7 @@ task run(type: Exec) {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "$adb", 'shell', 'am', 'start', '-n', 'net.rolodophone.brickbreaker/net.rolodophone.brickbreaker.AndroidLauncher'
+	commandLine "$adb", 'shell', 'am', 'start', '-n', 'io.github.rolodophone.ludumdare48/io.github.rolodophone.ludumdare48.AndroidLauncher'
 }
 
 eclipse.project.name = appName + "-android"
