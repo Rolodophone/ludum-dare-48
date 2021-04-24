@@ -2,16 +2,17 @@ package io.github.rolodophone.ludumdare48.screen
 
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.ludumdare48.MyGame
+import io.github.rolodophone.ludumdare48.ecs.component.AnimationComponent
 import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
+import io.github.rolodophone.ludumdare48.ecs.system.AnimationSystem
 import io.github.rolodophone.ludumdare48.ecs.system.DebugSystem
 import io.github.rolodophone.ludumdare48.ecs.system.PlayerInputSystem
 import io.github.rolodophone.ludumdare48.ecs.system.RenderSystem
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import ktx.ashley.entity
 import ktx.ashley.with
-import kotlin.random.Random.Default.nextBoolean
 import kotlin.random.Random.Default.nextInt
 
 private val tempVector = Vector2()
@@ -29,7 +30,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		for (y in 0 until NUM_ROWS) {
 			for (x in 0 until NUM_COLUMNS) {
 				
-				val thisTexture = if (nextBoolean()) textures.block_dirt0 else textures.block_dirt1
+				val thisTexture = textures.block_dirt.random()
 				
 				engine.entity { 
 					with<TransformComponent> {
@@ -53,9 +54,27 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			}
 		}
 
-		//add systems to engine (it is recommended to render *before* stepping the physics for some reason)
+		val dog = engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(textures.dog_rest[0])
+				rect.setPosition(2f * textures.block_dirt[0].regionWidth, 9f * textures.block_dirt[0].regionHeight)
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.dog_rest[0])
+			}
+			with<TileComponent> {
+				xIndex = 2
+				yIndex = 9
+			}
+			with<AnimationComponent> {
+				textureList = textures.dog_rest
+				frameDuration = 0.25f
+			}
+		}
+
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
+			addSystem(AnimationSystem())
 			addSystem(RenderSystem(batch, gameViewport))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures))
 		}

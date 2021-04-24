@@ -6,21 +6,147 @@ filter: Nearest, Nearest
 repeat: none
 block_dirt0
   rotate: false
-  xy: 184, 324
+  xy: 216, 420
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_dirt1
   rotate: false
+  xy: 2, 98
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_down0
+  rotate: false
+  xy: 34, 66
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_down1
+  rotate: false
+  xy: 216, 452
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_down3
+  rotate: false
+  xy: 216, 452
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_down2
+  rotate: false
   xy: 2, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left0
+  rotate: false
+  xy: 184, 420
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left1
+  rotate: false
+  xy: 216, 388
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left2
+  rotate: false
+  xy: 184, 388
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left3
+  rotate: false
+  xy: 2, 130
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left4
+  rotate: false
+  xy: 66, 98
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_left5
+  rotate: false
+  xy: 2, 66
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right0
+  rotate: false
+  xy: 34, 98
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right1
+  rotate: false
+  xy: 34, 34
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right2
+  rotate: false
+  xy: 2, 34
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right3
+  rotate: false
+  xy: 34, 130
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right4
+  rotate: false
+  xy: 184, 356
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_right5
+  rotate: false
+  xy: 66, 130
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_rest0
+  rotate: false
+  xy: 184, 452
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_rest1
+  rotate: false
+  xy: 98, 130
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 grid8
   rotate: false
-  xy: 2, 34
+  xy: 2, 162
   size: 180, 320
   orig: 180, 320
   offset: 0, 0
