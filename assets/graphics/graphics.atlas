@@ -4,9 +4,23 @@ size: 256, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-grid8
+block_dirt0
+  rotate: false
+  xy: 184, 324
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+block_dirt1
   rotate: false
   xy: 2, 2
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+grid8
+  rotate: false
+  xy: 2, 34
   size: 180, 320
   orig: 180, 320
   offset: 0, 0

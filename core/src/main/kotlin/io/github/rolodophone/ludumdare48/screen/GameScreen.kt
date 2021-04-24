@@ -2,22 +2,56 @@ package io.github.rolodophone.ludumdare48.screen
 
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.ludumdare48.MyGame
+import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
+import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
+import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.ecs.system.DebugSystem
 import io.github.rolodophone.ludumdare48.ecs.system.PlayerInputSystem
 import io.github.rolodophone.ludumdare48.ecs.system.RenderSystem
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import ktx.ashley.entity
+import ktx.ashley.with
+import kotlin.random.Random.Default.nextBoolean
+import kotlin.random.Random.Default.nextInt
 
 private val tempVector = Vector2()
 
 private const val MAX_DELTA_TIME = 1/10f
 
-private const val WALL_WIDTH = 3f
+private const val NUM_COLUMNS = 6
+private const val NUM_ROWS = 9
 
 class GameScreen(game: MyGame): MyScreen(game) {
 	private val gameEventManager = GameEventManager()
 
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
+		for (y in 0 until NUM_ROWS) {
+			for (x in 0 until NUM_COLUMNS) {
+				
+				val thisTexture = if (nextBoolean()) textures.block_dirt0 else textures.block_dirt1
+				
+				engine.entity { 
+					with<TransformComponent> {
+						setSizeFromTexture(thisTexture)
+						rect.setPosition(
+							(x * thisTexture.regionWidth).toFloat(), 
+							(y * thisTexture.regionHeight).toFloat()
+						)
+					}
+					with<GraphicsComponent> {
+						sprite.setRegion(thisTexture)
+						repeat(nextInt(4)) {
+							sprite.rotate90(true)
+						}
+					}
+					with<TileComponent> {
+						xIndex = x
+						yIndex = y
+					}
+				}
+			}
+		}
 
 		//add systems to engine (it is recommended to render *before* stepping the physics for some reason)
 		engine.run {
