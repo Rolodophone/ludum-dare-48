@@ -17,11 +17,13 @@ class DogComponent: Component, Pool.Poolable {
 	var digDuration = 3f
 	var diggingX = 0
 	var diggingY = 0
+	var diggableTiles = mutableListOf<Pair<Int, Int>>()
 
 	override fun reset() {
 		state = State.RESTING
 		var digDuration = 3f
 		var diggingX = 0
 		var diggingY = 0
+		diggableTiles.clear()
 	}
 }

@@ -6,12 +6,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.ludumdare48.ecs.component.DogComponent
-import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
-import io.github.rolodophone.ludumdare48.screen.NUM_COLUMNS
-import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import io.github.rolodophone.ludumdare48.util.unprojectX
@@ -29,35 +26,14 @@ class PlayerInputSystem(
 	allOf(TransformComponent::class).get()
 ) {
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
-	private val dogTileComp = dog.getNotNull(TileComponent.mapper)
-
-	private var dogOnSurface = true
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) &&
 			dogComp.state == DogComponent.State.RESTING
 		) {
-			if (dogOnSurface) {
-				for (x in 0 until NUM_COLUMNS) {
-					if (mouseInTile(x, NUM_ROWS - 1)) {
-						startDigging(x, NUM_ROWS - 1)
-						dogOnSurface = false
-						break
-					}
-				}
-			}
-
-			else { // dog underground
-				when {
-					mouseInTile(dogTileComp.xIndex, dogTileComp.yIndex - 1) -> {
-						startDigging(dogTileComp.xIndex, dogTileComp.yIndex - 1)
-					}
-					mouseInTile(dogTileComp.xIndex - 1, dogTileComp.yIndex) -> {
-						startDigging(dogTileComp.xIndex - 1, dogTileComp.yIndex)
-					}
-					mouseInTile(dogTileComp.xIndex + 1, dogTileComp.yIndex) -> {
-						startDigging(dogTileComp.xIndex + 1, dogTileComp.yIndex)
-					}
+			for (diggableTile in dogComp.diggableTiles) {
+				if (mouseInTile(diggableTile.first, diggableTile.second)) {
+					startDigging(diggableTile.first, diggableTile.second)
 				}
 			}
 		}

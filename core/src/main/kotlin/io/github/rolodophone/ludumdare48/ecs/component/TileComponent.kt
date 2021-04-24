@@ -9,8 +9,13 @@ class TileComponent: Component, Pool.Poolable {
 		val mapper = mapperFor<TileComponent>()
 	}
 
+	enum class Type {
+		DIGGABLE, OBSTACLE, BACKGROUND, ITEM, OTHER
+	}
+
 	var xIndex = 0
 	var yIndex = 0
+	var type = Type.OTHER
 
 	override fun reset() {
 		xIndex = 0

@@ -33,9 +33,8 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			}
 		}
 
-		for (y in 0 until NUM_ROWS) {
-			for (x in 0 until NUM_COLUMNS) {
-				
+		val tiles = Array(NUM_ROWS) { y ->
+			Array(NUM_COLUMNS) { x ->
 				val thisTexture = textures.block_dirt.random()
 				
 				engine.entity { 
@@ -55,6 +54,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 					with<TileComponent> {
 						xIndex = x
 						yIndex = y
+						type = TileComponent.Type.DIGGABLE
 					}
 				}
 			}
@@ -71,6 +71,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			with<TileComponent> {
 				xIndex = 2
 				yIndex = 9
+				type = TileComponent.Type.OTHER
 			}
 			with<AnimationComponent> {
 				textureList = textures.dog_rest
@@ -83,8 +84,8 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(AnimationSystem())
 			addSystem(RenderSystem(batch, gameViewport))
-			addSystem(DigSystem(gameEventManager, textures, dog))
-			addSystem(DebugSystem(gameEventManager, gameViewport, textures))
+			addSystem(DigSystem(gameEventManager, textures, tiles, dog))
+			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}
 
