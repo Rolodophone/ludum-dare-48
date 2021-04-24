@@ -34,6 +34,8 @@ class DigSystem(private val gameEventManager: GameEventManager, private val text
 				)
 				dogTileComp.xIndex = dogComp.diggingX
 				dogTileComp.yIndex = dogComp.diggingY + 1
+
+				gameStarted = true
 			}
 
 			when (dogComp.diggingX) {
@@ -63,10 +65,15 @@ class DigSystem(private val gameEventManager: GameEventManager, private val text
 			dogAnimationComp.animIndex = 0
 			dogAnimationComp.frameDuration = 1/4f
 
+			dogTransformComp.rect.setPosition(
+				(dogComp.diggingX * TILE_WIDTH).toFloat(),
+				(dogComp.diggingY * TILE_WIDTH).toFloat()
+			)
+
 			dogTileComp.xIndex = dogComp.diggingX
 			dogTileComp.yIndex = dogComp.diggingY
 
-
+			dogComp.state = DogComponent.State.RESTING
 		}
 	}
 

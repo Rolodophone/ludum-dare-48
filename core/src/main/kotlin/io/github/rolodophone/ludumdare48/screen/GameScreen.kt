@@ -13,8 +13,8 @@ private val tempVector = Vector2()
 
 private const val MAX_DELTA_TIME = 1/10f
 
-private const val NUM_COLUMNS = 6
-private const val NUM_ROWS = 9
+const val NUM_COLUMNS = 6
+const val NUM_ROWS = 9
 
 const val TILE_WIDTH = 30
 
@@ -80,7 +80,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		}
 
 		engine.run {
-			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
+			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(AnimationSystem())
 			addSystem(RenderSystem(batch, gameViewport))
 			addSystem(DigSystem(gameEventManager, textures, dog))
