@@ -10,7 +10,7 @@ class TileComponent: Component, Pool.Poolable {
 	}
 
 	enum class Type {
-		DIGGABLE, OBSTACLE, BACKGROUND, ITEM, OTHER
+		DIGGABLE, OBSTACLE, BACKGROUND, OTHER
 	}
 
 	var xIndex = 0

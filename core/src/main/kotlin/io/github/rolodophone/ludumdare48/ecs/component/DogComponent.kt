@@ -10,7 +10,7 @@ class DogComponent: Component, Pool.Poolable {
 	}
 
 	enum class State {
-		RESTING, DIGGING, HURT
+		RESTING, DIGGING, DIALOG
 	}
 
 	var state = State.RESTING
