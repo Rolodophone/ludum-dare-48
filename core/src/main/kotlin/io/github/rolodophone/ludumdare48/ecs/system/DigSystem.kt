@@ -209,7 +209,7 @@ class DigSystem(
 			dogAnimationComp.frameDuration = 1/4f
 
 			//descending level
-			if (dogTileComp.yIndex % LEVEL_HEIGHT == 0) {
+			if (dogTileComp.yIndex % LEVEL_HEIGHT == 0 && dogTileComp.yIndex != NUM_ROWS && dogTileComp.yIndex != 0) {
 				gameEventManager.trigger(GameEvent.DescendLevel)
 			}
 

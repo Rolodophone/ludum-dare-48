@@ -11,6 +11,7 @@ import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.screen.LEVEL_HEIGHT
+import io.github.rolodophone.ludumdare48.screen.NUM_LEVELS
 import io.github.rolodophone.ludumdare48.screen.START_LEVEL
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
@@ -46,7 +47,13 @@ class PlayerInputSystem(
 	}
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+			if (dialogActionable) {
+				gameEventManager.trigger(GameEvent.CloseDialog)
+				dialogActionable = false
+				return // don't break tile as well as close dialog
+			}
+
 			if (dogComp.state == DogComponent.State.RESTING) {
 				for (diggableTile in dogComp.diggableTiles) {
 					if (mouseInTile(diggableTile.first, diggableTile.second)) {
@@ -56,10 +63,6 @@ class PlayerInputSystem(
 				}
 			}
 
-			if (dialogActionable) {
-				gameEventManager.trigger(GameEvent.CloseDialog)
-				dialogActionable = false
-			}
 		}
 	}
 
@@ -68,7 +71,7 @@ class PlayerInputSystem(
 		val mouseY = gameViewport.unprojectY(Gdx.input.y.toFloat())
 
 		val left = x * TILE_WIDTH
-		val bottom = (y - level * LEVEL_HEIGHT) * TILE_WIDTH
+		val bottom = (y - ((NUM_LEVELS - 1) * LEVEL_HEIGHT)) * TILE_WIDTH
 		val right = (x+1) * TILE_WIDTH
 		val top = bottom + TILE_WIDTH
 

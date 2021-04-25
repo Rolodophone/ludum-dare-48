@@ -12,7 +12,6 @@ import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
-import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -36,7 +35,7 @@ class DebugSystem(
 
 	override fun update(deltaTime: Float) {
 		//enable/disable debugging
-		if (Gdx.input.isKeyJustPressed(Input.Keys.F3) && dogTileComp.yIndex != NUM_ROWS) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
 			gameEventManager.trigger(GameEvent.ShowDialog.apply {
 				message = listOf(if (!debuggingEnabled) "Enabled debugging." else "Disabled debugging.")
 				actionText = "Tap to continue."
