@@ -40,6 +40,13 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	private var startIntro = false
 
+	private val tips = listOf(
+		"Try to remember where\neverything is",
+		"Finding apple cores makes\ndigging quicker",
+		"You are looking for a\nbone",
+	)
+	private var tipNum = 0
+
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
 		gameEventManager.listen(GameEvent.GameOver) { delayedRestart() }
@@ -190,13 +197,17 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			with<DogComponent>()
 		}
 
+		val tip =
+			if (tipNum >= tips.size) tips.random()
+			else tips[tipNum++]
+
 		//add systems
 		addCoreSystems()
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, tip, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}

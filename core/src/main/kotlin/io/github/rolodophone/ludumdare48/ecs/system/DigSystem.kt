@@ -21,6 +21,7 @@ class DigSystem(
 	private val textures: MyTextures,
 	private val tiles: Array<Array<Entity>>,
 	private val sounds: MySounds,
+	private val tip: String,
 	dog: Entity
 ):
 	EntitySystem() {
@@ -30,13 +31,6 @@ class DigSystem(
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
 
 	private var timeSinceStartedDigging = 0f
-
-	private val tips = listOf(
-		"Try to remember where\neverything is",
-		"Finding apple cores makes\ndigging quicker",
-		"You are looking for a\nbone",
-	)
-	private var tipNum = 0
 
 	override fun addedToEngine(engine: Engine) {
 		super.addedToEngine(engine)
@@ -168,13 +162,6 @@ class DigSystem(
 
 					when (thisLayoutTile) {
 						is HurtItem -> {
-							val tip =
-								if (tipNum >= tips.size) tips.random()
-								else {
-									tips[tipNum]
-									tipNum++
-								}
-
 							newMessage.add("\nTip: $tip")
 							actionText = "Tap to try again."
 							effect = {
