@@ -3,13 +3,12 @@ package io.github.rolodophone.ludumdare48.ecs.system
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.ludumdare48.*
 import io.github.rolodophone.ludumdare48.ecs.component.*
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
-import io.github.rolodophone.ludumdare48.screen.NUM_COLUMNS
-import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
-import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
+import io.github.rolodophone.ludumdare48.screen.*
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -22,6 +21,7 @@ class DigSystem(
 	private val tiles: Array<Array<Entity>>,
 	private val sounds: MySounds,
 	private val tip: String,
+	private val gameViewport: Viewport,
 	dog: Entity
 ):
 	EntitySystem() {
@@ -32,15 +32,29 @@ class DigSystem(
 
 	private var timeSinceStartedDigging = 0f
 
+	private var level = START_LEVEL
+
 	override fun addedToEngine(engine: Engine) {
 		super.addedToEngine(engine)
 
 		// add initial tile highlights
-		var tileHighlights = MutableList(6) {
-			createTileHighlight(it, 8)
+		var tileHighlights = MutableList(NUM_COLUMNS) {
+			createTileHighlight(it, NUM_ROWS - 1)
 		}
-		dogComp.diggableTiles = MutableList(6) {
-			Pair(it, 8)
+		dogComp.diggableTiles = MutableList(NUM_COLUMNS) {
+			Pair(it, NUM_ROWS - 1)
+		}
+
+		gameEventManager.listen(GameEvent.DescendLevel) {
+			level--
+			gameEventManager.trigger(GameEvent.ViewportResized)
+		}
+
+		gameEventManager.listen(GameEvent.ViewportResized) {
+			if (dogComp.state != DogComponent.State.DIALOG) {
+//				gameViewport.camera.center()
+				gameViewport.camera.translate(0f, -((NUM_LEVELS-level-1) * LEVEL_HEIGHT * TILE_WIDTH).toFloat(), 0f)
+			}
 		}
 
 		gameEventManager.listen(GameEvent.StartDigging) {
@@ -60,10 +74,7 @@ class DigSystem(
 				}
 			}
 
-			dogTransformComp.rect.setPosition(
-				(dogTileComp.xIndex * TILE_WIDTH).toFloat(),
-				(dogTileComp.yIndex * TILE_WIDTH).toFloat()
-			)
+			dogTransformComp.rect.setPosition(tileToPosX(dogTileComp.xIndex), tileToPosY(dogTileComp.yIndex))
 
 			//remove tile highlights
 			tileHighlights.forEach { engine.removeEntity(it) }
@@ -105,10 +116,7 @@ class DigSystem(
 
 			if (thisLayoutTile !is Obstacle) {
 				//move to tile dug
-				dogTransformComp.rect.setPosition(
-					(dogComp.diggingX * TILE_WIDTH).toFloat(),
-					(dogComp.diggingY * TILE_WIDTH).toFloat()
-				)
+				dogTransformComp.rect.setPosition(tileToPosX(dogComp.diggingX), tileToPosY(dogComp.diggingY))
 
 				dogTileComp.xIndex = dogComp.diggingX
 				dogTileComp.yIndex = dogComp.diggingY
@@ -120,7 +128,7 @@ class DigSystem(
 			tiles[dogComp.diggingY][dogComp.diggingX] = engine.entity {
 				with<TransformComponent> {
 					setSizeFromTexture(textures.block_background)
-					rect.setPosition((dogComp.diggingX * TILE_WIDTH).toFloat(), (dogComp.diggingY * TILE_WIDTH).toFloat())
+					rect.setPosition(tileToPosX(dogComp.diggingX), tileToPosY(dogComp.diggingY))
 					z = when (thisLayoutTile) {
 						is Obstacle -> 0
 						else -> -10
@@ -200,9 +208,24 @@ class DigSystem(
 			dogAnimationComp.animIndex = 0
 			dogAnimationComp.frameDuration = 1/4f
 
+			//descending level
+			if (dogTileComp.yIndex % LEVEL_HEIGHT == 0) {
+				gameEventManager.trigger(GameEvent.DescendLevel)
+			}
+
 			if (tileHighlights.isEmpty()) {
 				//tile highlights
 				findDiggableTiles()
+
+				if (dogComp.diggableTiles.isEmpty()) {
+					gameEventManager.trigger(GameEvent.ShowDialog.apply {
+						message = listOf("Oh no! I'm stuck!\nTip: $tip")
+						actionText = "Tap to try again."
+						effect = {
+							gameEventManager.trigger(GameEvent.GameOver)
+						}
+					})
+				}
 
 				tileHighlights = MutableList(dogComp.diggableTiles.size) { i ->
 					createTileHighlight(dogComp.diggableTiles[i].first, dogComp.diggableTiles[i].second)
@@ -228,10 +251,7 @@ class DigSystem(
 		return engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.tile_highlight[0])
-				rect.setPosition(
-					(x * TILE_WIDTH).toFloat(),
-					(y * TILE_WIDTH).toFloat()
-				)
+				rect.setPosition(tileToPosX(x), tileToPosY(y))
 				z = 10
 			}
 			with<GraphicsComponent> {
@@ -298,4 +318,7 @@ class DigSystem(
 			}
 		}
 	}
+
+	private fun tileToPosX(x: Int) = (x * TILE_WIDTH).toFloat()
+	private fun tileToPosY(y: Int) = ((y - ((NUM_LEVELS - 1) * LEVEL_HEIGHT)) * TILE_WIDTH).toFloat()
 }

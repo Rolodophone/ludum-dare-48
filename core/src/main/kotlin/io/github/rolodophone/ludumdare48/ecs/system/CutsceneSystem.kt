@@ -154,7 +154,11 @@ class CutsceneSystem(
 			batch.projectionMatrix = gameViewport.camera.combined
 
 			when (event.id) {
-				0 -> runDelayed(listOf(0.5f, 3.5f, 4.5f), listOf(::hungry0, ::hungry05, ::hungry1, ::hungry2))
+				0 -> /*runDelayed(listOf(0.5f, 3.5f, 4.5f), listOf(::hungry0, ::hungry05, ::hungry1, ::hungry2)) TODO re-enable*/
+				{
+					zoomOut()
+					gameEventManager.trigger(GameEvent.StartGame)
+				}
 				1 -> runDelayed(listOf(2f, 2f, 8f), listOf(::outro0, ::outro1, ::outro2, ::outro3))
 				else -> throw GdxRuntimeException("No cutscene with id ${event.id}")
 			}

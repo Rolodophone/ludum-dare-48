@@ -18,7 +18,10 @@ import kotlin.random.Random.Default.nextInt
 private const val MAX_DELTA_TIME = 1/10f
 
 const val NUM_COLUMNS = 6
-const val NUM_ROWS = 9
+const val NUM_ROWS = 18
+const val LEVEL_HEIGHT = 9
+const val START_LEVEL = 1
+const val NUM_LEVELS = 2
 
 const val TILE_WIDTH = 30
 
@@ -154,14 +157,16 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		}
 		tiles = Array(NUM_ROWS) { y ->
 			Array(NUM_COLUMNS) { x ->
-				val thisTexture = textures.block_dirt.random()
+				val thisTexture =
+					if (y >= LEVEL_HEIGHT) textures.block_dirt.random()
+					else textures.block_stone_black
 
 				engine.entity {
 					with<TransformComponent> {
 						setSizeFromTexture(thisTexture)
 						rect.setPosition(
 							(x * TILE_WIDTH).toFloat(),
-							(y * TILE_WIDTH).toFloat()
+							((y - START_LEVEL * LEVEL_HEIGHT) * TILE_WIDTH).toFloat()
 						)
 					}
 					with<GraphicsComponent> {
@@ -188,7 +193,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			}
 			with<TileComponent> {
 				xIndex = 2
-				yIndex = 9
+				yIndex = NUM_ROWS
 				type = TileComponent.Type.OTHER
 			}
 			with<AnimationComponent> {
@@ -208,7 +213,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, tip, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, tip, gameViewport, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}

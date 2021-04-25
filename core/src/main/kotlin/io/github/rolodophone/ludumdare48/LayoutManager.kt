@@ -31,6 +31,16 @@ class LayoutManager(textures: MyTextures) {
 		arrayOf(null,		null,		null,		null,		null,		CAN),
 		arrayOf(null,		SEWAGE,		PIPE_END,	PIPE,		PIPE,		PIPE),
 		arrayOf(null,		null,		null,		null,		null,		null),
-		arrayOf(STONE,		DYNAMITE,	BONE,		STONE,		STONE,		APPLE),
-	).reversed()
+		arrayOf(STONE,		DYNAMITE,	null,		STONE,		STONE,		APPLE),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+		arrayOf(null,		null,		null,		null,		null,		null),
+
+		).reversed()
 }

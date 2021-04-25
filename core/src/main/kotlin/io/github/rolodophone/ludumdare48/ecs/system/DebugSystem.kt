@@ -8,9 +8,11 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.ludumdare48.MyTextures
 import io.github.rolodophone.ludumdare48.ecs.component.DogComponent
 import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
+import io.github.rolodophone.ludumdare48.ecs.component.TileComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -26,6 +28,7 @@ class DebugSystem(
 	dog: Entity
 ): EntitySystem() {
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
+	private val dogTileComp = dog.getNotNull(TileComponent.mapper)
 
 	private var debuggingEnabled = false
 
@@ -33,7 +36,7 @@ class DebugSystem(
 
 	override fun update(deltaTime: Float) {
 		//enable/disable debugging
-		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F3) && dogTileComp.yIndex != NUM_ROWS) {
 			gameEventManager.trigger(GameEvent.ShowDialog.apply {
 				message = listOf(if (!debuggingEnabled) "Enabled debugging." else "Disabled debugging.")
 				actionText = "Tap to continue."

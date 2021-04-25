@@ -10,6 +10,8 @@ import io.github.rolodophone.ludumdare48.ecs.component.DogComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import io.github.rolodophone.ludumdare48.screen.LEVEL_HEIGHT
+import io.github.rolodophone.ludumdare48.screen.START_LEVEL
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import io.github.rolodophone.ludumdare48.util.unprojectX
@@ -29,11 +31,17 @@ class PlayerInputSystem(
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
 	private var dialogActionable = false
 
+	private var level = START_LEVEL
+
 	override fun addedToEngine(engine: Engine) {
 		super.addedToEngine(engine)
 
 		gameEventManager.listen(GameEvent.DialogActionable) {
 			dialogActionable = true
+		}
+
+		gameEventManager.listen(GameEvent.DescendLevel) {
+			level--
 		}
 	}
 
@@ -60,9 +68,9 @@ class PlayerInputSystem(
 		val mouseY = gameViewport.unprojectY(Gdx.input.y.toFloat())
 
 		val left = x * TILE_WIDTH
-		val bottom = y * TILE_WIDTH
+		val bottom = (y - level * LEVEL_HEIGHT) * TILE_WIDTH
 		val right = (x+1) * TILE_WIDTH
-		val top = (y+1) * TILE_WIDTH
+		val top = bottom + TILE_WIDTH
 
 		return mouseX >= left &&
 				mouseX < right &&
