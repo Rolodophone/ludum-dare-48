@@ -40,6 +40,12 @@ class DialogSystem(
 	private var dialog: Entity? = null
 
 	override fun addedToEngine(engine: Engine) {
+		gameEventManager.listen(GameEvent.ViewportResized) {
+			if (dialog != null) {
+				centerOnDog()
+			}
+		}
+
 		gameEventManager.listen(GameEvent.ShowDialog) { event ->
 			dogComp.state = DogComponent.State.DIALOG
 
@@ -49,11 +55,7 @@ class DialogSystem(
 			val message = event.message.joinToString("\n").toUpperCase(Locale.getDefault())
 			effect = event.effect
 
-			//zoom in on dog
-			(gameViewport.camera as OrthographicCamera).zoom = 1 / 4f
-			gameViewport.camera.center(30f, 30f, dogTransform.rect.x, dogTransform.rect.y + 20)
-			gameViewport.camera.update()
-			batch.projectionMatrix = gameViewport.camera.combined
+			centerOnDog()
 
 			//draw the dialog box
 			dialog = engine.entity {
@@ -100,6 +102,14 @@ class DialogSystem(
 			//continue game
 			gameEventManager.trigger(GameEvent.DogRest)
 		}
+	}
+
+	private fun centerOnDog() {
+		//zoom in on dog
+		(gameViewport.camera as OrthographicCamera).zoom = 1 / 4f
+		gameViewport.camera.center(30f, 30f, dogTransform.rect.x, dogTransform.rect.y + 20)
+		gameViewport.camera.update()
+		batch.projectionMatrix = gameViewport.camera.combined
 	}
 
 	override fun update(deltaTime: Float) {

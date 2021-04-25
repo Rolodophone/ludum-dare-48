@@ -18,4 +18,5 @@ sealed class GameEvent {
 	object GameCompleted: GameEvent()
 	object StartGame: GameEvent()
 	object EndCutSceneFinished: GameEvent()
+	object ViewportResized: GameEvent()
 }

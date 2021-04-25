@@ -80,6 +80,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	override fun resize(width: Int, height: Int) {
 		gameViewport.update(width, height, true)
+		gameEventManager.trigger(GameEvent.ViewportResized)
 	}
 
 	override fun dispose() {
