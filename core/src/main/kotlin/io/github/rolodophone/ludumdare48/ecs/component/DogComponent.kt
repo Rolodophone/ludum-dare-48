@@ -21,9 +21,9 @@ class DogComponent: Component, Pool.Poolable {
 
 	override fun reset() {
 		state = State.RESTING
-		var digDuration = 3f
-		var diggingX = 0
-		var diggingY = 0
+		digDuration = 3f
+		diggingX = 0
+		diggingY = 0
 		diggableTiles.clear()
 	}
 }

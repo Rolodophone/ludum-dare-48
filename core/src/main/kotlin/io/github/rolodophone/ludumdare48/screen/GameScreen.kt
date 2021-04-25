@@ -8,6 +8,7 @@ import io.github.rolodophone.ludumdare48.MyGame
 import io.github.rolodophone.ludumdare48.ecs.component.*
 import io.github.rolodophone.ludumdare48.ecs.system.*
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import io.github.rolodophone.ludumdare48.util.MySounds
 import ktx.ashley.entity
 import ktx.ashley.with
 import kotlin.random.Random.Default.nextInt
@@ -23,6 +24,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 	private val gameEventManager = GameEventManager()
 	private val layoutManager = LayoutManager(textures)
 	private val shapeRenderer = ShapeRenderer()
+	private val sounds = MySounds()
 
 	private lateinit var sky: Entity
 	private lateinit var tiles: Array<Array<Entity>>
@@ -53,6 +55,10 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	override fun resize(width: Int, height: Int) {
 		gameViewport.update(width, height, true)
+	}
+
+	override fun dispose() {
+		sounds.dispose()
 	}
 
 	private fun delayedReset() {
@@ -130,7 +136,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(RenderSystem(batch, gameViewport))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedReset, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedReset, sounds, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}

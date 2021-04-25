@@ -9,4 +9,5 @@ dependencies {
 	api "io.github.libktx:ktx-graphics:$ktxVersion"
 	api "io.github.libktx:ktx-ashley:$ktxVersion"
 	api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
 }

@@ -10,6 +10,7 @@ import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.screen.NUM_COLUMNS
 import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
+import io.github.rolodophone.ludumdare48.util.MySounds
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -21,6 +22,7 @@ class DigSystem(
 	private val textures: MyTextures,
 	private val tiles: Array<Array<Entity>>,
 	private val resetGame: () -> Unit,
+	private val sounds: MySounds,
 	dog: Entity
 ):
 	EntitySystem() {
@@ -48,6 +50,9 @@ class DigSystem(
 		}
 
 		gameEventManager.listen(GameEvent.StartDigging) {
+			//play sound
+			sounds.playDogDig(dogComp.digDuration)
+
 			// move to tile
 			if (dogComp.diggingY < dogTileComp.yIndex) { // digging down
 				dogTileComp.xIndex = dogComp.diggingX
@@ -95,6 +100,14 @@ class DigSystem(
 
 		gameEventManager.listen(GameEvent.FinishDigging) {
 			val thisLayoutTile = layoutManager.layout[dogComp.diggingY][dogComp.diggingX]
+
+			//play sound
+			if (thisLayoutTile is HurtItem) {
+				sounds.playDogHurt()
+			}
+			else if (thisLayoutTile is Item) {
+				sounds.playDogHappy()
+			}
 
 			if (thisLayoutTile !is Obstacle) {
 				//move to tile dug
