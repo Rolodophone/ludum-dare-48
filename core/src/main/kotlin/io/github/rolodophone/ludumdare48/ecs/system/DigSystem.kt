@@ -10,7 +10,6 @@ import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.screen.NUM_COLUMNS
 import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
-import io.github.rolodophone.ludumdare48.util.MySounds
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -171,7 +170,10 @@ class DigSystem(
 						is HurtItem -> {
 							val tip =
 								if (tipNum >= tips.size) tips.random()
-								else tips[tipNum++]
+								else {
+									tips[tipNum]
+									tipNum++
+								}
 
 							newMessage.add("\nTip: $tip")
 							actionText = "Tap to try again."

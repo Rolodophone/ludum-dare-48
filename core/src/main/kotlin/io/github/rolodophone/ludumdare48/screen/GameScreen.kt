@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import io.github.rolodophone.ludumdare48.LayoutManager
 import io.github.rolodophone.ludumdare48.MyGame
+import io.github.rolodophone.ludumdare48.MySounds
 import io.github.rolodophone.ludumdare48.ecs.component.*
 import io.github.rolodophone.ludumdare48.ecs.system.*
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
-import io.github.rolodophone.ludumdare48.util.MySounds
 import ktx.ashley.entity
 import ktx.ashley.with
 import kotlin.random.Random.Default.nextInt

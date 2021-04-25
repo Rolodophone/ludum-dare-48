@@ -1,4 +1,4 @@
-package io.github.rolodophone.ludumdare48.util
+package io.github.rolodophone.ludumdare48
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
@@ -12,6 +12,7 @@ class MySounds: Disposable {
 	private val dog_dig = Gdx.audio.newSound(Gdx.files.internal("sound/dog_dig.ogg"))!!
 	private val dog_hurt = Gdx.audio.newSound(Gdx.files.internal("sound/dog_hurt.ogg"))!!
 	private val dog_happy = Gdx.audio.newSound(Gdx.files.internal("sound/dog_happy.ogg"))!!
+	private val dog_rumble = Gdx.audio.newSound(Gdx.files.internal("sound/dog_rumble.ogg"))!!
 
 	private fun playSound(sound: Sound) {
 		sound.play()
@@ -26,10 +27,14 @@ class MySounds: Disposable {
 	}
 	fun playDogHurt() = playSound(dog_hurt)
 	fun playDogHappy() = playSound(dog_happy)
+	fun playDogRumble() {
+		dog_rumble.play(0.5f)
+	}
 
 	override fun dispose() {
 		dog_dig.dispose()
 		dog_hurt.dispose()
 		dog_happy.dispose()
+		dog_rumble.dispose()
 	}
 }

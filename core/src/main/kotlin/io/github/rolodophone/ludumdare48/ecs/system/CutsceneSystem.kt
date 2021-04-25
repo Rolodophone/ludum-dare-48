@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.badlogic.gdx.utils.viewport.Viewport
+import io.github.rolodophone.ludumdare48.MySounds
 import io.github.rolodophone.ludumdare48.MyTextures
 import io.github.rolodophone.ludumdare48.ecs.component.AnimationComponent
 import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
@@ -14,7 +15,6 @@ import io.github.rolodophone.ludumdare48.ecs.component.MoveComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
-import io.github.rolodophone.ludumdare48.util.MySounds
 import io.github.rolodophone.ludumdare48.util.halfWorldHeight
 import io.github.rolodophone.ludumdare48.util.halfWorldWidth
 import ktx.ashley.configureEntity
@@ -78,6 +78,10 @@ class CutsceneSystem(
 				frameDuration = 1/8f
 			}
 		}
+	}
+
+	private fun hungry05() {
+		sounds.playDogRumble()
 	}
 
 	private fun hungry1() {
@@ -150,7 +154,7 @@ class CutsceneSystem(
 			batch.projectionMatrix = gameViewport.camera.combined
 
 			when (event.id) {
-				0 -> runDelayed(listOf(4f, 4.5f), listOf(::hungry0, ::hungry1, ::hungry2))
+				0 -> runDelayed(listOf(0.5f, 3.5f, 4.5f), listOf(::hungry0, ::hungry05, ::hungry1, ::hungry2))
 				1 -> runDelayed(listOf(2f, 2f, 8f), listOf(::outro0, ::outro1, ::outro2, ::outro3))
 				else -> throw GdxRuntimeException("No cutscene with id ${event.id}")
 			}
