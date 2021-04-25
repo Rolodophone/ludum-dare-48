@@ -1,6 +1,7 @@
 package io.github.rolodophone.ludumdare48.screen
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import io.github.rolodophone.ludumdare48.LayoutManager
@@ -32,9 +33,16 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	private var resetting = false
 
+	private val music = Gdx.audio.newMusic(Gdx.files.internal("sound/music.mp3"))
+
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
 		reset()
+
+		//start music
+		music.volume = 0.5f
+		music.play()
+		music.isLooping = true
 	}
 
 	override fun hide() {
@@ -59,6 +67,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	override fun dispose() {
 		sounds.dispose()
+		music.dispose()
 	}
 
 	private fun delayedReset() {
