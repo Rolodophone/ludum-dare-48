@@ -47,6 +47,11 @@ class DebugSystem(
 				dogComp.digDuration = 0.1f
 			}
 
+			//end game
+			if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+				gameEventManager.trigger(GameEvent.GameCompleted)
+			}
+
 			//grid
 			if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
 				if (grid == null) {

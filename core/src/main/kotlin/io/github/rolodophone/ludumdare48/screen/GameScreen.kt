@@ -38,10 +38,17 @@ class GameScreen(game: MyGame): MyScreen(game) {
 	private val gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.ogg"))!!
 	private val outroMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/outro.ogg"))!!
 
+	private var startIntro = false
+
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
+		gameEventManager.listen(GameEvent.GameOver) { delayedRestart() }
+		gameEventManager.listen(GameEvent.GameCompleted) { gameComplete() }
+		gameEventManager.listen(GameEvent.StartGame) { startGame() }
+		gameEventManager.listen(GameEvent.EndCutSceneFinished) { endCutsceneFinished() }
+
 		addCoreSystems()
-		endCutsceneFinished()
+		startIntro()
 	}
 
 	override fun hide() {
@@ -57,6 +64,10 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		if (resetting) {
 			restartGame()
 			resetting = false
+		}
+		if (startIntro) {
+			startIntro()
+			startIntro = false
 		}
 	}
 
@@ -86,19 +97,26 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	private fun gameComplete() {
 		gameMusic.stop()
-		introMusic.position = 0f
-		introMusic.play()
-		introMusic.isLooping = true
+		outroMusic.position = 0f
+		outroMusic.play()
 
 		gameEventManager.trigger(GameEvent.Cutscene.apply { id = 1 })
 	}
 
 	private fun endCutsceneFinished() {
 		outroMusic.stop()
+
+		engine.removeAllEntities()
+		engine.removeAllSystems()
+		addCoreSystems()
+
+		startIntro = true
+	}
+
+	private fun startIntro() {
 		introMusic.volume = 0.7f
 		introMusic.position = 0f
 		introMusic.play()
-		introMusic.isLooping = true
 
 		gameEventManager.trigger(GameEvent.Cutscene.apply { id = 0 })
 	}
@@ -106,6 +124,11 @@ class GameScreen(game: MyGame): MyScreen(game) {
 	private fun restartGame() {
 		//remove event callbacks
 		gameEventManager.removeAllCallbacks()
+
+		gameEventManager.listen(GameEvent.GameOver) { delayedRestart() }
+		gameEventManager.listen(GameEvent.GameCompleted) { gameComplete() }
+		gameEventManager.listen(GameEvent.StartGame) { startGame() }
+		gameEventManager.listen(GameEvent.EndCutSceneFinished) { endCutsceneFinished() }
 
 		//remove game entities and systems
 		engine.removeAllEntities()
@@ -173,14 +196,14 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedRestart, ::gameComplete, sounds, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}
 
 	private fun addCoreSystems() {
 		engine.run {
-			addSystem(CutsceneSystem(gameEventManager, textures, gameViewport, batch as SpriteBatch, ::startGame, ::endCutsceneFinished))
+			addSystem(CutsceneSystem(gameEventManager, textures, sounds, gameViewport, batch as SpriteBatch))
 			addSystem(AnimationSystem())
 			addSystem(MoveSystem())
 			addSystem(RenderSystem(batch, gameViewport))

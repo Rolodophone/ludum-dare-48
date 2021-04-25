@@ -21,8 +21,6 @@ class DigSystem(
 	private val layoutManager: LayoutManager,
 	private val textures: MyTextures,
 	private val tiles: Array<Array<Entity>>,
-	private val resetGame: () -> Unit,
-	private val gameFinished: () -> Unit,
 	private val sounds: MySounds,
 	dog: Entity
 ):
@@ -178,13 +176,13 @@ class DigSystem(
 							newMessage.add("\nTip: $tip")
 							actionText = "Tap to try again."
 							effect = {
-								resetGame.invoke()
+								gameEventManager.trigger(GameEvent.GameOver)
 							}
 						}
 						is BoneItem -> {
 							actionText = "Tap to continue."
 							effect = {
-								gameFinished.invoke()
+								gameEventManager.trigger(GameEvent.GameCompleted)
 							}
 						}
 						else -> {

@@ -14,4 +14,8 @@ sealed class GameEvent {
 	object Cutscene: GameEvent() {
 		var id = 0
 	}
+	object GameOver: GameEvent()
+	object GameCompleted: GameEvent()
+	object StartGame: GameEvent()
+	object EndCutSceneFinished: GameEvent()
 }

@@ -6,308 +6,371 @@ filter: Nearest, Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 526
+  xy: 2, 522
   size: 180, 50
   orig: 180, 50
   offset: 0, 0
   index: -1
 block_background
   rotate: false
-  xy: 136, 398
+  xy: 184, 778
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_dirt0
   rotate: false
-  xy: 184, 878
+  xy: 184, 842
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_dirt1
   rotate: false
-  xy: 104, 462
+  xy: 216, 970
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_pipe_end
   rotate: false
-  xy: 152, 652
+  xy: 184, 970
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_pipe_middle
   rotate: false
-  xy: 184, 942
+  xy: 184, 938
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone
   rotate: false
-  xy: 34, 98
+  xy: 136, 374
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone_black
   rotate: false
-  xy: 66, 98
+  xy: 216, 842
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone_sand
   rotate: false
-  xy: 104, 494
+  xy: 104, 438
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dialog_box
   rotate: false
-  xy: 2, 578
+  xy: 2, 574
   size: 148, 104
   orig: 148, 104
   offset: 0, 0
   index: -1
 dog_dig_down0
   rotate: false
-  xy: 104, 398
+  xy: 104, 310
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_down1
   rotate: false
-  xy: 2, 98
+  xy: 184, 906
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_down2
   rotate: false
-  xy: 34, 34
+  xy: 104, 246
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_down3
   rotate: false
-  xy: 66, 130
+  xy: 168, 406
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left0
   rotate: false
-  xy: 136, 494
+  xy: 152, 584
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left1
   rotate: false
-  xy: 216, 878
+  xy: 136, 310
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left2
   rotate: false
-  xy: 2, 66
+  xy: 104, 342
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left3
   rotate: false
-  xy: 184, 974
+  xy: 152, 648
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left4
   rotate: false
-  xy: 136, 430
+  xy: 136, 342
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left5
   rotate: false
-  xy: 34, 130
+  xy: 104, 374
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right0
   rotate: false
-  xy: 152, 588
+  xy: 168, 438
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right1
   rotate: false
-  xy: 184, 814
+  xy: 168, 310
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right2
   rotate: false
-  xy: 216, 910
+  xy: 216, 874
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right3
   rotate: false
-  xy: 216, 974
+  xy: 104, 406
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right4
   rotate: false
-  xy: 184, 846
+  xy: 104, 278
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right5
   rotate: false
-  xy: 136, 462
+  xy: 216, 906
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_happy_apple_core
   rotate: false
-  xy: 2, 34
+  xy: 168, 374
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_happy_bone
   rotate: false
-  xy: 104, 430
+  xy: 184, 874
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hungry0
   rotate: false
-  xy: 2, 318
+  xy: 2, 158
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_hungry1
   rotate: false
-  xy: 2, 474
+  xy: 2, 418
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_hungry2
   rotate: false
-  xy: 2, 214
+  xy: 2, 54
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_hurt_dynamite
   rotate: false
-  xy: 152, 620
+  xy: 136, 438
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_plastic_bag
   rotate: false
-  xy: 104, 366
+  xy: 168, 342
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_sewage
   rotate: false
-  xy: 184, 910
+  xy: 216, 938
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_tin_can
   rotate: false
-  xy: 2, 2
+  xy: 216, 810
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
+dog_outro0
+  rotate: false
+  xy: 2, 470
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro4
+  rotate: false
+  xy: 2, 470
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro2
+  rotate: false
+  xy: 2, 262
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro6
+  rotate: false
+  xy: 2, 262
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro5
+  rotate: false
+  xy: 2, 314
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro1
+  rotate: false
+  xy: 2, 314
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro3
+  rotate: false
+  xy: 2, 314
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro7
+  rotate: false
+  xy: 2, 314
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_outro8
+  rotate: false
+  xy: 104, 470
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
 dog_rest0
   rotate: false
-  xy: 2, 130
+  xy: 152, 616
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_rest1
   rotate: false
-  xy: 34, 66
+  xy: 184, 810
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_think0
   rotate: false
-  xy: 2, 266
+  xy: 2, 106
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_think1
   rotate: false
-  xy: 2, 422
+  xy: 2, 366
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_think2
   rotate: false
-  xy: 2, 162
+  xy: 2, 2
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 dog_think3
   rotate: false
-  xy: 2, 370
+  xy: 2, 210
   size: 100, 50
   orig: 100, 50
   offset: 0, 0
   index: -1
 grid8
   rotate: false
-  xy: 2, 684
+  xy: 2, 680
   size: 180, 320
   orig: 180, 320
   offset: 0, 0
   index: -1
 tile_highlight0
   rotate: false
-  xy: 216, 942
+  xy: 136, 406
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 tile_highlight1
   rotate: false
-  xy: 66, 66
+  xy: 136, 278
   size: 30, 30
   orig: 30, 30
   offset: 0, 0

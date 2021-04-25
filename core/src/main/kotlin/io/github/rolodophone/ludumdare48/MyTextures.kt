@@ -31,6 +31,7 @@ class MyTextures: Disposable {
 	val tile_highlight = List(2) { graphicsAtlas.findRegion("tile_highlight$it")!! }
 	val dog_think = List(4) { graphicsAtlas.findRegion("dog_think$it")!! }
 	val dog_hungry = List(3) { graphicsAtlas.findRegion("dog_hungry$it")!! }
+	val dog_outro = List(9) { graphicsAtlas.findRegion("dog_outro$it")!! }
 
 	override fun dispose() {
 		graphicsAtlas.dispose()

@@ -14,18 +14,19 @@ import io.github.rolodophone.ludumdare48.ecs.component.MoveComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import io.github.rolodophone.ludumdare48.util.MySounds
 import io.github.rolodophone.ludumdare48.util.halfWorldHeight
 import io.github.rolodophone.ludumdare48.util.halfWorldWidth
+import ktx.ashley.configureEntity
 import ktx.ashley.entity
 import ktx.ashley.with
 
 class CutsceneSystem(
 	private val gameEventManager: GameEventManager,
 	private val textures: MyTextures,
+	private val sounds: MySounds,
 	private val gameViewport: Viewport,
-	private val batch: SpriteBatch,
-	private val startGame: () -> Unit,
-	private val restartGame: () -> Unit
+	private val batch: SpriteBatch
 ): EntitySystem() {
 	private var funcQueue = mutableListOf<() -> Unit>()
 	private var delays = mutableListOf<Float>()
@@ -104,7 +105,41 @@ class CutsceneSystem(
 		engine.removeEntity(entity)
 		entity = null
 		zoomOut()
-		startGame()
+		gameEventManager.trigger(GameEvent.StartGame)
+	}
+
+	private fun outro0() {
+		sounds.playDogHappy()
+		entity = engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(textures.dog_outro[8])
+				rect.setPosition(gameViewport.halfWorldWidth() - 50, gameViewport.halfWorldHeight() - 25)
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.dog_outro[8])
+			}
+		}
+	}
+
+	private fun outro1() {
+		engine.configureEntity(entity!!) {
+			with<AnimationComponent> {
+				textureList = textures.dog_outro
+				frameDuration = 1/6f
+				loop = false
+			}
+		}
+	}
+
+	private fun outro2() {
+		sounds.playDogHappy()
+	}
+
+	private fun outro3() {
+		engine.removeEntity(entity)
+		entity = null
+		zoomOut()
+		gameEventManager.trigger(GameEvent.EndCutSceneFinished)
 	}
 
 	override fun addedToEngine(engine: Engine) {
@@ -116,6 +151,7 @@ class CutsceneSystem(
 
 			when (event.id) {
 				0 -> runDelayed(listOf(4f, 4.5f), listOf(::hungry0, ::hungry1, ::hungry2))
+				1 -> runDelayed(listOf(2f, 2f, 8f), listOf(::outro0, ::outro1, ::outro2, ::outro3))
 				else -> throw GdxRuntimeException("No cutscene with id ${event.id}")
 			}
 		}
