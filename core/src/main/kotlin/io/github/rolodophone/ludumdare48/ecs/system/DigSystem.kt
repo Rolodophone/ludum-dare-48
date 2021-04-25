@@ -22,6 +22,7 @@ class DigSystem(
 	private val textures: MyTextures,
 	private val tiles: Array<Array<Entity>>,
 	private val resetGame: () -> Unit,
+	private val gameFinished: () -> Unit,
 	private val sounds: MySounds,
 	dog: Entity
 ):
@@ -34,7 +35,9 @@ class DigSystem(
 	private var timeSinceStartedDigging = 0f
 
 	private val tips = listOf(
-		""
+		"Try to remember where\neverything is",
+		"Finding apple cores makes\ndigging quicker",
+		"You are looking for a\nbone",
 	)
 	private var tipNum = 0
 
@@ -166,22 +169,30 @@ class DigSystem(
 					val newMessage = mutableListOf<String>()
 					newMessage.addAll(thisLayoutTile.message)
 
-					if (thisLayoutTile is HurtItem) {
-						val tip =
-							if (tipNum >= tips.size) tips.random()
-							else tips[tipNum++]
+					when (thisLayoutTile) {
+						is HurtItem -> {
+							val tip =
+								if (tipNum >= tips.size) tips.random()
+								else tips[tipNum++]
 
-						newMessage.add("\nTip: $tip")
-						actionText = "Tap to try again."
-						effect = {
-							resetGame.invoke()
+							newMessage.add("\nTip: $tip")
+							actionText = "Tap to try again."
+							effect = {
+								resetGame.invoke()
+							}
 						}
-					}
-					else {
-						actionText = "Tap to continue."
-						effect = {
-							thisLayoutTile.effect.invoke(dogComp)
-							gameEventManager.trigger(GameEvent.DogRest)
+						is BoneItem -> {
+							actionText = "Tap to continue."
+							effect = {
+								gameFinished.invoke()
+							}
+						}
+						else -> {
+							actionText = "Tap to continue."
+							effect = {
+								thisLayoutTile.effect.invoke(dogComp)
+								gameEventManager.trigger(GameEvent.DogRest)
+							}
 						}
 					}
 

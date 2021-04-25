@@ -11,4 +11,7 @@ sealed class GameEvent {
 	}
 	object DialogActionable: GameEvent()
 	object CloseDialog: GameEvent()
+	object Cutscene: GameEvent() {
+		var id = 0
+	}
 }

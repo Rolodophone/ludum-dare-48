@@ -8,6 +8,7 @@ import io.github.rolodophone.ludumdare48.LayoutManager
 import io.github.rolodophone.ludumdare48.MyGame
 import io.github.rolodophone.ludumdare48.ecs.component.*
 import io.github.rolodophone.ludumdare48.ecs.system.*
+import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.util.MySounds
 import ktx.ashley.entity
@@ -33,16 +34,14 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	private var resetting = false
 
-	private val music = Gdx.audio.newMusic(Gdx.files.internal("sound/music.mp3"))
+	private val introMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/intro.ogg"))!!
+	private val gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/game.ogg"))!!
+	private val outroMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/outro.ogg"))!!
 
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
-		reset()
-
-		//start music
-		music.volume = 0.5f
-		music.play()
-		music.isLooping = true
+		addCoreSystems()
+		endCutsceneFinished()
 	}
 
 	override fun hide() {
@@ -56,7 +55,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		engine.update(newDeltaTime)
 
 		if (resetting) {
-			reset()
+			restartGame()
 			resetting = false
 		}
 	}
@@ -67,14 +66,44 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 	override fun dispose() {
 		sounds.dispose()
-		music.dispose()
+		gameMusic.dispose()
 	}
 
-	private fun delayedReset() {
+	private fun delayedRestart() {
 		resetting = true
 	}
 
-	fun reset() {
+	private fun startGame() {
+		//start music
+		introMusic.stop()
+		gameMusic.volume = 0.5f
+		gameMusic.position = 0f
+		gameMusic.play()
+		gameMusic.isLooping = true
+
+		restartGame()
+	}
+
+	private fun gameComplete() {
+		gameMusic.stop()
+		introMusic.position = 0f
+		introMusic.play()
+		introMusic.isLooping = true
+
+		gameEventManager.trigger(GameEvent.Cutscene.apply { id = 1 })
+	}
+
+	private fun endCutsceneFinished() {
+		outroMusic.stop()
+		introMusic.volume = 0.7f
+		introMusic.position = 0f
+		introMusic.play()
+		introMusic.isLooping = true
+
+		gameEventManager.trigger(GameEvent.Cutscene.apply { id = 0 })
+	}
+
+	private fun restartGame() {
 		//remove event callbacks
 		gameEventManager.removeAllCallbacks()
 
@@ -139,14 +168,22 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		}
 
 		//add systems
+		addCoreSystems()
 		engine.run {
-			addSystem(AnimationSystem())
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
-			addSystem(RenderSystem(batch, gameViewport))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedReset, sounds, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedRestart, ::gameComplete, sounds, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
+		}
+	}
+
+	private fun addCoreSystems() {
+		engine.run {
+			addSystem(CutsceneSystem(gameEventManager, textures, gameViewport, batch as SpriteBatch, ::startGame, ::endCutsceneFinished))
+			addSystem(AnimationSystem())
+			addSystem(MoveSystem())
+			addSystem(RenderSystem(batch, gameViewport))
 		}
 	}
 }

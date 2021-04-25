@@ -1,257 +1,313 @@
 
 graphics.png
-size: 256, 512
+size: 256, 1024
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 background
   rotate: false
-  xy: 2, 2
+  xy: 2, 526
   size: 180, 50
   orig: 180, 50
   offset: 0, 0
   index: -1
 block_background
   rotate: false
-  xy: 216, 98
+  xy: 136, 398
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_dirt0
   rotate: false
-  xy: 216, 258
+  xy: 184, 878
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_dirt1
   rotate: false
-  xy: 152, 64
+  xy: 104, 462
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_pipe_end
   rotate: false
-  xy: 152, 128
+  xy: 152, 652
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_pipe_middle
   rotate: false
-  xy: 152, 96
+  xy: 184, 942
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone
   rotate: false
-  xy: 184, 226
+  xy: 34, 98
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone_black
   rotate: false
-  xy: 216, 162
+  xy: 66, 98
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 block_stone_sand
   rotate: false
-  xy: 184, 418
+  xy: 104, 494
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dialog_box
   rotate: false
-  xy: 2, 54
+  xy: 2, 578
   size: 148, 104
   orig: 148, 104
   offset: 0, 0
   index: -1
 dog_dig_down0
   rotate: false
-  xy: 216, 226
+  xy: 104, 398
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_down1
   rotate: false
-  xy: 216, 386
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-dog_dig_down3
-  rotate: false
-  xy: 216, 386
+  xy: 2, 98
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_down2
   rotate: false
-  xy: 184, 34
+  xy: 34, 34
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_dig_down3
+  rotate: false
+  xy: 66, 130
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left0
   rotate: false
-  xy: 184, 354
+  xy: 136, 494
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left1
   rotate: false
-  xy: 216, 130
+  xy: 216, 878
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left2
   rotate: false
-  xy: 216, 290
+  xy: 2, 66
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left3
   rotate: false
-  xy: 184, 450
+  xy: 184, 974
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left4
   rotate: false
-  xy: 184, 162
+  xy: 136, 430
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_left5
   rotate: false
-  xy: 184, 322
+  xy: 34, 130
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right0
   rotate: false
-  xy: 216, 322
+  xy: 152, 588
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right1
   rotate: false
-  xy: 216, 34
+  xy: 184, 814
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right2
   rotate: false
-  xy: 184, 194
+  xy: 216, 910
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right3
   rotate: false
-  xy: 184, 386
+  xy: 216, 974
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right4
   rotate: false
-  xy: 184, 98
+  xy: 184, 846
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_dig_right5
   rotate: false
-  xy: 184, 258
+  xy: 136, 462
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_happy_apple_core
   rotate: false
-  xy: 216, 194
+  xy: 2, 34
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
+dog_happy_bone
+  rotate: false
+  xy: 104, 430
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+dog_hungry0
+  rotate: false
+  xy: 2, 318
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_hungry1
+  rotate: false
+  xy: 2, 474
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_hungry2
+  rotate: false
+  xy: 2, 214
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
 dog_hurt_dynamite
   rotate: false
-  xy: 216, 418
+  xy: 152, 620
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_plastic_bag
   rotate: false
-  xy: 184, 66
+  xy: 104, 366
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_sewage
   rotate: false
-  xy: 216, 354
+  xy: 184, 910
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_hurt_tin_can
   rotate: false
-  xy: 216, 66
+  xy: 2, 2
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_rest0
   rotate: false
-  xy: 216, 450
+  xy: 2, 130
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 dog_rest1
   rotate: false
-  xy: 184, 130
+  xy: 34, 66
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
+dog_think0
+  rotate: false
+  xy: 2, 266
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_think1
+  rotate: false
+  xy: 2, 422
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_think2
+  rotate: false
+  xy: 2, 162
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+dog_think3
+  rotate: false
+  xy: 2, 370
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
 grid8
   rotate: false
-  xy: 2, 160
+  xy: 2, 684
   size: 180, 320
   orig: 180, 320
   offset: 0, 0
   index: -1
 tile_highlight0
   rotate: false
-  xy: 184, 290
+  xy: 216, 942
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 tile_highlight1
   rotate: false
-  xy: 184, 2
+  xy: 66, 66
   size: 30, 30
   orig: 30, 30
   offset: 0, 0

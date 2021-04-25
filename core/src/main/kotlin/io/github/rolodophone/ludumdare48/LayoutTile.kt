@@ -20,3 +20,8 @@ open class HurtItem(
 	texture: TextureRegion,
 	message: List<String>,
 ): Item(texture, message, {})
+
+open class BoneItem(
+	texture: TextureRegion,
+	message: List<String>,
+): Item(texture, message, {})

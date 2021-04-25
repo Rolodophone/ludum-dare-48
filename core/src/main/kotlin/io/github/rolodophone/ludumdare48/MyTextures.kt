@@ -21,6 +21,7 @@ class MyTextures: Disposable {
 	val dog_dig_left = List(6) { graphicsAtlas.findRegion("dog_dig_left$it")!! }
 	val dog_dig_right = List(6) { graphicsAtlas.findRegion("dog_dig_right$it")!! }
 	val dog_happy_apple_core = graphicsAtlas.findRegion("dog_happy_apple_core")!!
+	val dog_happy_bone = graphicsAtlas.findRegion("dog_happy_bone")!!
 	val dog_hurt_dynamite = graphicsAtlas.findRegion("dog_hurt_dynamite")!!
 	val dog_hurt_plastic_bag = graphicsAtlas.findRegion("dog_hurt_plastic_bag")!!
 	val dog_hurt_sewage = graphicsAtlas.findRegion("dog_hurt_sewage")!!
@@ -28,6 +29,8 @@ class MyTextures: Disposable {
 	val dog_rest = List(2) { graphicsAtlas.findRegion("dog_rest$it")!! }
 	val grid8 = graphicsAtlas.findRegion("grid8")!!
 	val tile_highlight = List(2) { graphicsAtlas.findRegion("tile_highlight$it")!! }
+	val dog_think = List(4) { graphicsAtlas.findRegion("dog_think$it")!! }
+	val dog_hungry = List(3) { graphicsAtlas.findRegion("dog_hungry$it")!! }
 
 	override fun dispose() {
 		graphicsAtlas.dispose()
