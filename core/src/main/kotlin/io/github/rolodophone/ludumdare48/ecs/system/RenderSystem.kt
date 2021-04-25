@@ -2,10 +2,14 @@ package io.github.rolodophone.ludumdare48.ecs.system
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.ludumdare48.ecs.component.GraphicsComponent
 import io.github.rolodophone.ludumdare48.ecs.component.MoveComponent
+import io.github.rolodophone.ludumdare48.ecs.component.TextComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import io.github.rolodophone.ludumdare48.util.setBounds
@@ -27,6 +31,8 @@ class RenderSystem(
 	allOf(TransformComponent::class, GraphicsComponent::class).get(),
 	compareBy { entity -> entity[TransformComponent.mapper] }
 ) {
+	private val font = BitmapFont(Gdx.files.internal("font/pixelated.fnt"), Gdx.files.internal("font/pixelated.png"), false)
+
 	override fun update(deltaTime: Float) {
 		gameViewport.apply()
 		batch.use(gameViewport.camera.combined) {
@@ -49,8 +55,7 @@ class RenderSystem(
 		val moveComp = entity[MoveComponent.mapper]
 		if (moveComp == null) {
 			graphicsComp.sprite.setBounds(transformComp.rect)
-		}
-		else {
+		} else {
 			graphicsComp.sprite.setBounds(
 				moveComp.interpolatedPosition.x,
 				moveComp.interpolatedPosition.y,
@@ -61,5 +66,12 @@ class RenderSystem(
 
 		graphicsComp.sprite.rotation = transformComp.rotation
 		graphicsComp.sprite.draw(batch)
+
+		val textComp = entity[TextComponent.mapper]
+		if (textComp != null) {
+			batch.projectionMatrix = gameViewport.camera.projection.scale(1/4f, 1/4f, 1f)
+			textComp.draw(font, batch as SpriteBatch)
+			batch.projectionMatrix = gameViewport.camera.combined
+		}
 	}
 }

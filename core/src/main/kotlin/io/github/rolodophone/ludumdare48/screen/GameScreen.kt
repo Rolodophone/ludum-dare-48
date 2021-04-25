@@ -1,6 +1,8 @@
 package io.github.rolodophone.ludumdare48.screen
 
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import io.github.rolodophone.ludumdare48.LayoutManager
 import io.github.rolodophone.ludumdare48.MyGame
 import io.github.rolodophone.ludumdare48.ecs.component.*
@@ -20,10 +22,13 @@ const val TILE_WIDTH = 30
 class GameScreen(game: MyGame): MyScreen(game) {
 	private val gameEventManager = GameEventManager()
 	private val layoutManager = LayoutManager(textures)
+	private val shapeRenderer = ShapeRenderer()
 
 	private lateinit var sky: Entity
 	private lateinit var tiles: Array<Array<Entity>>
 	private lateinit var dog: Entity
+
+	private var resetting = false
 
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
@@ -39,13 +44,25 @@ class GameScreen(game: MyGame): MyScreen(game) {
 	override fun render(delta: Float) {
 		val newDeltaTime = if (delta > MAX_DELTA_TIME) MAX_DELTA_TIME else delta
 		engine.update(newDeltaTime)
+
+		if (resetting) {
+			reset()
+			resetting = false
+		}
 	}
 
 	override fun resize(width: Int, height: Int) {
 		gameViewport.update(width, height, true)
 	}
 
+	private fun delayedReset() {
+		resetting = true
+	}
+
 	fun reset() {
+		//remove event callbacks
+		gameEventManager.removeAllCallbacks()
+
 		//remove game entities and systems
 		engine.removeAllEntities()
 		engine.removeAllSystems()
@@ -108,11 +125,12 @@ class GameScreen(game: MyGame): MyScreen(game) {
 
 		//add systems
 		engine.run {
-			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(AnimationSystem())
-			addSystem(DialogSystem(gameEventManager))
+			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
+			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(RenderSystem(batch, gameViewport))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::reset, dog))
+			addSystem(CustomDrawSystem(shapeRenderer))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, ::delayedReset, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}

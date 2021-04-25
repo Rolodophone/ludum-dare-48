@@ -16,6 +16,7 @@ class MyTextures: Disposable {
 	val block_stone_black = graphicsAtlas.findRegion("block_stone_black")!!
 	val block_stone_sand = graphicsAtlas.findRegion("block_stone_sand")!!
 	val block_stone = graphicsAtlas.findRegion("block_stone")!!
+	val dialog_box = graphicsAtlas.findRegion("dialog_box")!!
 	val dog_dig_down = List(4) { graphicsAtlas.findRegion("dog_dig_down$it")!! }
 	val dog_dig_left = List(6) { graphicsAtlas.findRegion("dog_dig_left$it")!! }
 	val dog_dig_right = List(6) { graphicsAtlas.findRegion("dog_dig_right$it")!! }

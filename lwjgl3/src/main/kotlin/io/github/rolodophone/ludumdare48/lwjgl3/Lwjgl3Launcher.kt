@@ -7,8 +7,9 @@ import io.github.rolodophone.ludumdare48.MyGame
 /** Launches the desktop (LWJGL3) application.  */
 fun main() {
 	Lwjgl3Application(MyGame(), Lwjgl3ApplicationConfiguration().apply {
-		setTitle("BrickBreaker")
+		setTitle("Dig Dog Dig")
 		setWindowedMode(9 * 60, 16 * 60)
 		setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png")
+		setResizable(false)
 	})
 }

@@ -1,5 +1,6 @@
 package io.github.rolodophone.ludumdare48.ecs.system
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
@@ -21,20 +22,35 @@ import ktx.ashley.allOf
 class PlayerInputSystem(
 	private val gameViewport: Viewport,
 	private val gameEventManager: GameEventManager,
-	private val dog: Entity
+	dog: Entity
 ): IteratingSystem(
 	allOf(TransformComponent::class).get()
 ) {
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
+	private var dialogActionable = false
+
+	override fun addedToEngine(engine: Engine) {
+		super.addedToEngine(engine)
+
+		gameEventManager.listen(GameEvent.DialogActionable) {
+			dialogActionable = true
+		}
+	}
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) &&
-			dogComp.state == DogComponent.State.RESTING
-		) {
-			for (diggableTile in dogComp.diggableTiles) {
-				if (mouseInTile(diggableTile.first, diggableTile.second)) {
-					startDigging(diggableTile.first, diggableTile.second)
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+			if (dogComp.state == DogComponent.State.RESTING) {
+				for (diggableTile in dogComp.diggableTiles) {
+					if (mouseInTile(diggableTile.first, diggableTile.second)) {
+						startDigging(diggableTile.first, diggableTile.second)
+						break
+					}
 				}
+			}
+
+			if (dialogActionable) {
+				gameEventManager.trigger(GameEvent.CloseDialog)
+				dialogActionable = false
 			}
 		}
 	}

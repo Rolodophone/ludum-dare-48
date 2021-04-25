@@ -31,4 +31,8 @@ class GameEventManager {
 			}
 		}
 	}
+
+	fun removeAllCallbacks() {
+		callbacks.clear()
+	}
 }

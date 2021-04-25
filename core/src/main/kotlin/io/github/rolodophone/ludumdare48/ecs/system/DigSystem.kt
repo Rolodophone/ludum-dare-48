@@ -8,6 +8,7 @@ import io.github.rolodophone.ludumdare48.ecs.component.*
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.screen.NUM_COLUMNS
+import io.github.rolodophone.ludumdare48.screen.NUM_ROWS
 import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
@@ -30,12 +31,14 @@ class DigSystem(
 
 	private var timeSinceStartedDigging = 0f
 
-	val tips = listOf(
+	private val tips = listOf(
 		""
 	)
-	var tipNum = 0
+	private var tipNum = 0
 
 	override fun addedToEngine(engine: Engine) {
+		super.addedToEngine(engine)
+
 		// add initial tile highlights
 		var tileHighlights = MutableList(6) {
 			createTileHighlight(it, 8)
@@ -145,8 +148,6 @@ class DigSystem(
 				dogAnimationComp.animIndex = 0
 
 				//show dialog
-				dogComp.state = DogComponent.State.DIALOG
-
 				gameEventManager.trigger(GameEvent.ShowDialog.apply {
 
 					val newMessage = mutableListOf<String>()
@@ -157,7 +158,7 @@ class DigSystem(
 							if (tipNum >= tips.size) tips.random()
 							else tips[tipNum++]
 
-						newMessage.add("Tip: $tip")
+						newMessage.add("\nTip: $tip")
 						actionText = "Tap to try again."
 						effect = {
 							resetGame.invoke()
@@ -188,11 +189,13 @@ class DigSystem(
 			dogAnimationComp.animIndex = 0
 			dogAnimationComp.frameDuration = 1/4f
 
-			//tile highlights
-			findDiggableTiles()
+			if (tileHighlights.isEmpty()) {
+				//tile highlights
+				findDiggableTiles()
 
-			tileHighlights = MutableList(dogComp.diggableTiles.size) { i ->
-				createTileHighlight(dogComp.diggableTiles[i].first, dogComp.diggableTiles[i].second)
+				tileHighlights = MutableList(dogComp.diggableTiles.size) { i ->
+					createTileHighlight(dogComp.diggableTiles[i].first, dogComp.diggableTiles[i].second)
+				}
 			}
 		}
 	}
@@ -238,25 +241,36 @@ class DigSystem(
 	private fun findDiggableTiles() {
 		dogComp.diggableTiles.clear()
 
-		// find left
 		var left: Int? = null
-
-		for (x in dogTileComp.xIndex downTo 0) {
-			val tile = tiles[dogTileComp.yIndex][x]
-			if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.DIGGABLE) {
-				left = x
-				break
-			}
-		}
-
-		//find right
 		var right: Int? = null
 
-		for (x in dogTileComp.xIndex until NUM_COLUMNS) {
-			val tile = tiles[dogTileComp.yIndex][x]
-			if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.DIGGABLE) {
-				right = x
-				break
+		var bottomLeft = 0
+		var bottomRight = NUM_COLUMNS - 1
+
+		if (dogTileComp.yIndex < NUM_ROWS) {
+			// find left
+			for (x in dogTileComp.xIndex downTo 0) {
+				val tile = tiles[dogTileComp.yIndex][x]
+				if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.DIGGABLE) {
+					left = x
+					bottomLeft = x + 1
+					break
+				} else if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.OBSTACLE) {
+					bottomLeft = x + 1
+					break
+				}
+			}
+			//find right
+			for (x in dogTileComp.xIndex until NUM_COLUMNS) {
+				val tile = tiles[dogTileComp.yIndex][x]
+				if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.DIGGABLE) {
+					right = x
+					bottomRight = x - 1
+					break
+				} else if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.OBSTACLE) {
+					bottomRight = x - 1
+					break
+				}
 			}
 		}
 
@@ -265,12 +279,7 @@ class DigSystem(
 
 		//find bottom
 		if (dogTileComp.yIndex > 0) {
-			if (left == null) left = 0
-			else left += 1
-			if (right == null) right = NUM_COLUMNS - 1
-			else right -= 1
-
-			for (x in left..right) {
+			for (x in bottomLeft..bottomRight) {
 				val tile = tiles[dogTileComp.yIndex - 1][x]
 				if (tile.getNotNull(TileComponent.mapper).type == TileComponent.Type.DIGGABLE) {
 					dogComp.diggableTiles.add(Pair(x, dogTileComp.yIndex - 1))

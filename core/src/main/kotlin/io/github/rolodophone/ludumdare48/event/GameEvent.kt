@@ -9,5 +9,6 @@ sealed class GameEvent {
 		var actionText = ""
 		var effect = {}
 	}
+	object DialogActionable: GameEvent()
 	object CloseDialog: GameEvent()
 }
