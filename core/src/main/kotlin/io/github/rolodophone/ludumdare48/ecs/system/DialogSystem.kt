@@ -40,6 +40,7 @@ class DialogSystem(
 	private var actionText = ""
 	private var shownActionText = ""
 	private var effect: () -> Unit = {}
+	private var gameOver = false
 
 	private var dialog: Entity? = null
 
@@ -70,6 +71,7 @@ class DialogSystem(
 			dialogDelaying = true
 			val message = event.message.joinToString("\n").toUpperCase(Locale.getDefault())
 			effect = event.effect
+			gameOver = event.gameOver
 
 			centerOnDog()
 
@@ -96,7 +98,7 @@ class DialogSystem(
 			}
 		}
 
-		gameEventManager.listen(GameEvent.CloseDialog) {
+		gameEventManager.listen(GameEvent.CloseDialog) { event ->
 			//remove dialog entity
 			engine.removeEntity(dialog)
 			dialog = null
@@ -109,7 +111,9 @@ class DialogSystem(
 				gameViewport.worldWidth,
 				gameViewport.worldHeight
 			)
-			gameViewport.camera.translate(0f, -((NUM_LEVELS -level-1) * LEVEL_HEIGHT * TILE_WIDTH).toFloat(), 0f)
+			if (!gameOver) {
+				gameViewport.camera.translate(0f, -((NUM_LEVELS - level - 1) * LEVEL_HEIGHT * TILE_WIDTH).toFloat(), 0f)
+			}
 			gameViewport.camera.update()
 			batch.projectionMatrix = gameViewport.camera.combined
 
@@ -117,7 +121,9 @@ class DialogSystem(
 			effect.invoke()
 
 			//continue game
-			gameEventManager.trigger(GameEvent.DogRest)
+			if (!gameOver) {
+				gameEventManager.trigger(GameEvent.DogRest)
+			}
 		}
 	}
 

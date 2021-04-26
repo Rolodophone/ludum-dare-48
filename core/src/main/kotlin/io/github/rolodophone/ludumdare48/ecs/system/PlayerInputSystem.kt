@@ -45,8 +45,8 @@ class PlayerInputSystem(
 	override fun update(deltaTime: Float) {
 		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
 			if (dialogActionable) {
-				gameEventManager.trigger(GameEvent.CloseDialog)
 				dialogActionable = false
+				gameEventManager.trigger(GameEvent.CloseDialog)
 				return // don't break tile as well as close dialog
 			}
 			else if (dogComp.state == DogComponent.State.DIALOG) {

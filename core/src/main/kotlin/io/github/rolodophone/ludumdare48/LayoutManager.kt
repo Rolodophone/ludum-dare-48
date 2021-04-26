@@ -40,13 +40,13 @@ class LayoutManager(textures: MyTextures) {
 		arrayOf(STONE,		DYNAMITE,	null,		STONE,		STONE,		APPLE),
 		arrayOf(null,		null,		null,		STONE,		STONE,		null),
 		arrayOf(STONE,		BOOT,		null,		null,		APPLE,		null),
-		arrayOf(STONE,		STONE,		null,		null,		null,		null),
+		arrayOf(STONE,		STONE,		null,		null,		STN_BLK,	null),
 		arrayOf(STONE,		DIAMOND,	null,		STN_BLK,	STN_BLK,	ROOT),
 		arrayOf(null,		APPLE,		null,		ROOT,		null,		null),
 		arrayOf(TREASURE,	null,		null,		null,		null,		null),
 		arrayOf(null,		null,		FOSSIL,		STONE,		STONE,		null),
 		arrayOf(NAIL,		null,		STN_BLK,	STN_BLK,	BONE,		null),
-		arrayOf(null,		null,		null,		null,		null,		NAIL),
+		arrayOf(null,		null,		null,		STN_BLK,	null,		NAIL),
 
 		).reversed()
 }

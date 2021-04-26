@@ -8,6 +8,7 @@ sealed class GameEvent {
 		var message = listOf<String>()
 		var actionText = ""
 		var effect = {}
+		var gameOver = false
 	}
 	object DialogActionable: GameEvent()
 	object ShowActionText: GameEvent()

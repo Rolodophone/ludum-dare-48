@@ -36,11 +36,14 @@ class DebugSystem(
 	override fun update(deltaTime: Float) {
 		//enable/disable debugging
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
-			gameEventManager.trigger(GameEvent.ShowDialog.apply {
-				message = listOf(if (!debuggingEnabled) "Enabled debugging." else "Disabled debugging.")
-				actionText = "Tap to continue."
-				effect = { debuggingEnabled = !debuggingEnabled }
-			})
+			if (!debuggingEnabled) {
+				debuggingEnabled = true
+				gameEventManager.trigger(GameEvent.ShowDialog.apply {
+					message = listOf("Enabled debugging.")
+					actionText = "Tap to continue."
+					effect = { }
+				})
+			}
 		}
 
 		if (debuggingEnabled) {

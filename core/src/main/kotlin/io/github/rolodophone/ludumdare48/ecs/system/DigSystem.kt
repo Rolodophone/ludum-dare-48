@@ -176,12 +176,14 @@ class DigSystem(
 							effect = {
 								gameEventManager.trigger(GameEvent.GameOver)
 							}
+							gameOver = true
 						}
 						is BoneItem -> {
 							actionText = "Tap to continue."
 							effect = {
 								gameEventManager.trigger(GameEvent.GameCompleted)
 							}
+							gameOver = true
 						}
 						else -> {
 							actionText = "Tap to continue."
@@ -189,6 +191,7 @@ class DigSystem(
 								thisLayoutTile.effect.invoke(dogComp)
 								gameEventManager.trigger(GameEvent.DogRest)
 							}
+							gameOver = false
 						}
 					}
 
@@ -225,6 +228,7 @@ class DigSystem(
 						effect = {
 							gameEventManager.trigger(GameEvent.GameOver)
 						}
+						gameOver = true
 					})
 				}
 
