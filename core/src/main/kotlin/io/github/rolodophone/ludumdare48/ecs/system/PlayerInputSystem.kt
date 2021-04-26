@@ -30,6 +30,8 @@ class PlayerInputSystem(
 
 	private var level = START_LEVEL
 
+	private var mouseWasPressed = false
+
 	override fun addedToEngine(engine: Engine) {
 		super.addedToEngine(engine)
 
@@ -43,27 +45,30 @@ class PlayerInputSystem(
 	}
 
 	override fun update(deltaTime: Float) {
-		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-			if (dialogActionable) {
-				dialogActionable = false
-				gameEventManager.trigger(GameEvent.CloseDialog)
-				return // don't break tile as well as close dialog
-			}
-			else if (dogComp.state == DogComponent.State.DIALOG) {
-				//speed up dialog with double tap
-				gameEventManager.trigger(GameEvent.ShowActionText)
-				return
-			}
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+			if (!mouseWasPressed) {
 
-			if (dogComp.state == DogComponent.State.RESTING) {
-				for (diggableTile in dogComp.diggableTiles) {
-					if (mouseInTile(diggableTile.first, diggableTile.second)) {
-						startDigging(diggableTile.first, diggableTile.second)
-						break
+				if (dialogActionable) {
+					dialogActionable = false
+					gameEventManager.trigger(GameEvent.CloseDialog)
+				}
+				else if (dogComp.state == DogComponent.State.DIALOG) {
+					//speed up dialog with double tap
+					gameEventManager.trigger(GameEvent.ShowActionText)
+				}
+				else if (dogComp.state == DogComponent.State.RESTING) {
+					for (diggableTile in dogComp.diggableTiles) {
+						if (mouseInTile(diggableTile.first, diggableTile.second)) {
+							startDigging(diggableTile.first, diggableTile.second)
+							break
+						}
 					}
 				}
 			}
-
+			mouseWasPressed = true
+		}
+		else {
+			mouseWasPressed = false
 		}
 	}
 

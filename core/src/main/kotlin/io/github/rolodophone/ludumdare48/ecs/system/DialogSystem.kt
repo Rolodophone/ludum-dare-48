@@ -47,6 +47,7 @@ class DialogSystem(
 	private var level = START_LEVEL
 
 	private var willShowActionText = false
+	private var willRestDog = false
 
 	override fun addedToEngine(engine: Engine) {
 		gameEventManager.listen(GameEvent.ViewportResized) {
@@ -98,7 +99,7 @@ class DialogSystem(
 			}
 		}
 
-		gameEventManager.listen(GameEvent.CloseDialog) { event ->
+		gameEventManager.listen(GameEvent.CloseDialog) {
 			//remove dialog entity
 			engine.removeEntity(dialog)
 			dialog = null
@@ -122,7 +123,7 @@ class DialogSystem(
 
 			//continue game
 			if (!gameOver) {
-				gameEventManager.trigger(GameEvent.DogRest)
+				willRestDog = true
 			}
 		}
 	}
@@ -147,6 +148,11 @@ class DialogSystem(
 		if (willShowActionText) {
 			showActionText()
 			willShowActionText = false
+		}
+
+		if (willRestDog) {
+			gameEventManager.trigger(GameEvent.DogRest)
+			willRestDog = false
 		}
 	}
 
