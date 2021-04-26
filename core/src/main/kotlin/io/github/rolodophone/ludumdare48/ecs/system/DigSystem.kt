@@ -138,7 +138,8 @@ class DigSystem(
 					sprite.setRegion(
 						when (thisLayoutTile) {
 							is Obstacle -> thisLayoutTile.texture
-							else -> textures.block_background
+							else -> if (dogComp.diggingY >= 9) textures.block_background
+								else textures.gravel_dark
 						}
 					)
 					if (thisLayoutTile !is Obstacle || thisLayoutTile.randomRotation) {

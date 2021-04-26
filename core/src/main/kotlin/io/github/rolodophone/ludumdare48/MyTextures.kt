@@ -38,6 +38,8 @@ class MyTextures: Disposable {
 	val root_middle = graphicsAtlas.findRegion("root_middle")!!
 	val treasure = graphicsAtlas.findRegion("treasure")!!
 	val fossil = graphicsAtlas.findRegion("fossil")!!
+	val gravel = graphicsAtlas.findRegion("gravel")!!
+	val gravel_dark = graphicsAtlas.findRegion("gravel_dark")!!
 
 	override fun dispose() {
 		graphicsAtlas.dispose()

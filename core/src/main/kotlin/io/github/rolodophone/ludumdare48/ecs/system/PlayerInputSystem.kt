@@ -2,12 +2,11 @@ package io.github.rolodophone.ludumdare48.ecs.system
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.ludumdare48.ecs.component.DogComponent
-import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
 import io.github.rolodophone.ludumdare48.screen.LEVEL_HEIGHT
@@ -17,7 +16,6 @@ import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import io.github.rolodophone.ludumdare48.util.unprojectX
 import io.github.rolodophone.ludumdare48.util.unprojectY
-import ktx.ashley.allOf
 
 /**
  * Handles player input and triggers the appropriate [GameEvent]s.
@@ -26,9 +24,7 @@ class PlayerInputSystem(
 	private val gameViewport: Viewport,
 	private val gameEventManager: GameEventManager,
 	dog: Entity
-): IteratingSystem(
-	allOf(TransformComponent::class).get()
-) {
+): EntitySystem() {
 	private val dogComp = dog.getNotNull(DogComponent.mapper)
 	private var dialogActionable = false
 
@@ -46,12 +42,17 @@ class PlayerInputSystem(
 		}
 	}
 
-	override fun processEntity(entity: Entity, deltaTime: Float) {
+	override fun update(deltaTime: Float) {
 		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
 			if (dialogActionable) {
 				gameEventManager.trigger(GameEvent.CloseDialog)
 				dialogActionable = false
 				return // don't break tile as well as close dialog
+			}
+			else if (dogComp.state == DogComponent.State.DIALOG) {
+				//speed up dialog with double tap
+				gameEventManager.trigger(GameEvent.ShowActionText)
+				return
 			}
 
 			if (dogComp.state == DogComponent.State.RESTING) {

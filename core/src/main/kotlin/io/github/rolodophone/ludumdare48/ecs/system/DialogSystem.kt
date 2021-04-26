@@ -13,6 +13,10 @@ import io.github.rolodophone.ludumdare48.ecs.component.TextComponent
 import io.github.rolodophone.ludumdare48.ecs.component.TransformComponent
 import io.github.rolodophone.ludumdare48.event.GameEvent
 import io.github.rolodophone.ludumdare48.event.GameEventManager
+import io.github.rolodophone.ludumdare48.screen.LEVEL_HEIGHT
+import io.github.rolodophone.ludumdare48.screen.NUM_LEVELS
+import io.github.rolodophone.ludumdare48.screen.START_LEVEL
+import io.github.rolodophone.ludumdare48.screen.TILE_WIDTH
 import io.github.rolodophone.ludumdare48.util.getNotNull
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -39,11 +43,23 @@ class DialogSystem(
 
 	private var dialog: Entity? = null
 
+	private var level = START_LEVEL
+
+	private var willShowActionText = false
+
 	override fun addedToEngine(engine: Engine) {
 		gameEventManager.listen(GameEvent.ViewportResized) {
 			if (dialog != null) {
 				centerOnDog()
 			}
+		}
+
+		gameEventManager.listen(GameEvent.ShowActionText) {
+			willShowActionText = true
+		}
+
+		gameEventManager.listen(GameEvent.DescendLevel) {
+			level--
 		}
 
 		gameEventManager.listen(GameEvent.ShowDialog) { event ->
@@ -93,6 +109,7 @@ class DialogSystem(
 				gameViewport.worldWidth,
 				gameViewport.worldHeight
 			)
+			gameViewport.camera.translate(0f, -((NUM_LEVELS -level-1) * LEVEL_HEIGHT * TILE_WIDTH).toFloat(), 0f)
 			gameViewport.camera.update()
 			batch.projectionMatrix = gameViewport.camera.combined
 
@@ -117,11 +134,20 @@ class DialogSystem(
 			timeSinceDialogShown += deltaTime
 
 			if (timeSinceDialogShown > ACTION_DELAY) {
-				timeSinceDialogShown = 0f
-				shownActionText = actionText
-				gameEventManager.trigger(GameEvent.DialogActionable)
-				dialogDelaying = false
+				showActionText()
 			}
 		}
+
+		if (willShowActionText) {
+			showActionText()
+			willShowActionText = false
+		}
+	}
+
+	private fun showActionText() {
+		timeSinceDialogShown = 0f
+		shownActionText = actionText
+		gameEventManager.trigger(GameEvent.DialogActionable)
+		dialogDelaying = false
 	}
 }

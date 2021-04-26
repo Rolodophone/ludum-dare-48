@@ -167,7 +167,7 @@ dog_dig_right0
   index: -1
 dog_dig_right1
   rotate: false
-  xy: 216, 746
+  xy: 104, 182
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
@@ -389,6 +389,13 @@ gravel
   orig: 30, 30
   offset: 0, 0
   index: -1
+gravel_dark
+  rotate: false
+  xy: 184, 714
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
 grid8
   rotate: false
   xy: 2, 680
@@ -412,7 +419,7 @@ tile_highlight0
   index: -1
 tile_highlight1
   rotate: false
-  xy: 184, 714
+  xy: 216, 746
   size: 30, 30
   orig: 30, 30
   offset: 0, 0

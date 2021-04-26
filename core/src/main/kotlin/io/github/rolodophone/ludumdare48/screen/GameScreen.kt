@@ -159,7 +159,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			Array(NUM_COLUMNS) { x ->
 				val thisTexture =
 					if (y >= LEVEL_HEIGHT) textures.block_dirt.random()
-					else textures.block_stone_black
+					else textures.gravel
 
 				engine.entity {
 					with<TransformComponent> {

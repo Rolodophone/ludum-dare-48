@@ -10,6 +10,7 @@ sealed class GameEvent {
 		var effect = {}
 	}
 	object DialogActionable: GameEvent()
+	object ShowActionText: GameEvent()
 	object CloseDialog: GameEvent()
 	object Cutscene: GameEvent() {
 		var id = 0
