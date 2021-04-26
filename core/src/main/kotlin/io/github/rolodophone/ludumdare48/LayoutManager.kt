@@ -45,7 +45,7 @@ class LayoutManager(textures: MyTextures) {
 		arrayOf(APPLE,		null,		null,		null,		null,		null),
 		arrayOf(STONE,		STONE,		null,		DYNAMITE,	STN_BLK,	STN_BLK),
 		arrayOf(STONE,		DIAMOND,	null,		null,		null,		BONE),
-		arrayOf(STONE,		STONE,		null,		null,		null,		null),
+		arrayOf(STONE,		STONE,		null,		null,		null,		STN_BLK),
 		arrayOf(STONE,		STONE,		STN_BLK,	STN_BLK,	STN_BLK,	STN_BLK),
 		).reversed()
 }

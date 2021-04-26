@@ -175,7 +175,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 		sky = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.background)
-				rect.setPosition(0f, gameViewport.worldHeight - textures.background.regionHeight)
+				rect.setPosition(-30f, gameViewport.worldHeight - textures.background.regionHeight + 30f)
 			}
 			with<GraphicsComponent> {
 				sprite.setRegion(textures.background)
@@ -208,6 +208,13 @@ class GameScreen(game: MyGame): MyScreen(game) {
 					}
 				}
 			}
+		}
+		for (y in 0 until NUM_ROWS) {
+			addFakeTile(-1, y)
+			addFakeTile(NUM_COLUMNS, y)
+		}
+		for (x in -1 until NUM_COLUMNS) {
+			addFakeTile(x, -1)
 		}
 		dog = engine.entity {
 			with<TransformComponent> {
@@ -249,6 +256,28 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(AnimationSystem())
 			addSystem(MoveSystem())
 			addSystem(RenderSystem(batch, gameViewport))
+		}
+	}
+
+	private fun addFakeTile(x: Int, y: Int) {
+		val texture =
+			if (y >= LEVEL_HEIGHT) textures.block_dirt.random()
+			else textures.gravel
+
+		engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(texture)
+				rect.setPosition(
+					(x * TILE_WIDTH).toFloat(),
+					((y - START_LEVEL * LEVEL_HEIGHT) * TILE_WIDTH).toFloat()
+				)
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(texture)
+				repeat(nextInt(4)) {
+					sprite.rotate90(true)
+				}
+			}
 		}
 	}
 }
