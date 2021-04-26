@@ -9,7 +9,7 @@ fun main() {
 	Lwjgl3Application(MyGame(), Lwjgl3ApplicationConfiguration().apply {
 		setTitle("Dig Dog Dig")
 		setWindowedMode(9 * 60, 16 * 60)
-		setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png")
+		setWindowIcon("icons/icon128.png", "icons/icon64.png", "icons/icon32.png", "icons/icon16.png")
 		setResizable(false)
 	})
 }
