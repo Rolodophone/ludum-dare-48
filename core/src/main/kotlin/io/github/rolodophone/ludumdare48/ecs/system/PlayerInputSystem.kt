@@ -30,7 +30,7 @@ class PlayerInputSystem(
 
 	private var level = START_LEVEL
 
-	private var mouseWasPressed = false
+	private var mouseWasPressed = true
 
 	override fun addedToEngine(engine: Engine) {
 		super.addedToEngine(engine)

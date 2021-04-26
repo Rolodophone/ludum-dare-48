@@ -44,9 +44,35 @@ class GameScreen(game: MyGame): MyScreen(game) {
 	private var startIntro = false
 
 	private val tips = listOf(
-		"Try to remember where\neverything is",
-		"Finding apple cores makes\ndigging quicker",
-		"You are looking for a\nbone",
+		"Try to remember where\neverything is.",
+		"Finding apple cores makes\ndigging quicker.",
+		"You are looking for a bone.",
+		"Don't get stuck!",
+		"Treasure is of no use to a dog.",
+		"Neither are diamonds.",
+		"Always pick up as many apple\ncores as you can.",
+		"There are two levels of depth.",
+		"Choose your route carefully.",
+		"Don't use a pen and paper. That's\ntotally cheating.",
+		"I remember burying my owner's\nboot somewhere near here...",
+		"It's a shame I got ill\notherwise I would sniff it out.",
+		"Where is my bone?!",
+		"Seriously, I'm still looking\nfor it?!",
+		"I could be doing other things,\nlike playing fetch!",
+		"Must... Find... Bone...",
+		"Anytime now, surely?",
+		"I must be so close!",
+		"This is the developer speaking.\nYou're unacceptably bad at this\ngame.",
+		"People like you are the reason\nI have to write so many tips.",
+		"You've died 21 times now. Maybe\nit's time you gave up?",
+		"And you've died again!",
+		"Woof wof, woof wooof woof.\n(Stop distracting them)",
+		"Who said that?",
+		"Wuf wuf, wawoof.\n(Me, the dog)",
+		"Okay dog, fine. By the way, what\nbreed of dog are you supposed to\nrepresent?",
+		"Wuf wuf woof.\n(None of your business)",
+		"Wow, I don't remember\nprogramming *that* attitude.",
+		"Well, by this stage you've\nsurely completed the game so\nI guess I'll loop the tips here."
 	)
 	private var tipNum = 0
 
@@ -203,9 +229,8 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			with<DogComponent>()
 		}
 
-		val tip =
-			if (tipNum >= tips.size) tips.random()
-			else tips[tipNum++]
+		tipNum++
+		if (tipNum == tips.size) tipNum = 0
 
 		//add systems
 		addCoreSystems()
@@ -213,7 +238,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, dog))
 			addSystem(DialogSystem(gameEventManager, gameViewport, batch as SpriteBatch, textures, dog))
 			addSystem(CustomDrawSystem(shapeRenderer))
-			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, tip, gameViewport, dog))
+			addSystem(DigSystem(gameEventManager, layoutManager, textures, tiles, sounds, tips[tipNum], gameViewport, dog))
 			addSystem(DebugSystem(gameEventManager, gameViewport, textures, dog))
 		}
 	}
