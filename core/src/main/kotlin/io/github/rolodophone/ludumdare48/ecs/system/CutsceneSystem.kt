@@ -129,7 +129,7 @@ class CutsceneSystem(
 		engine.configureEntity(entity!!) {
 			with<AnimationComponent> {
 				textureList = textures.dog_outro
-				frameDuration = 1/6f
+				frameDuration = 60/372f
 				loop = false
 			}
 		}

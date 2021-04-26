@@ -231,7 +231,7 @@ class GameScreen(game: MyGame): MyScreen(game) {
 			}
 			with<AnimationComponent> {
 				textureList = textures.dog_rest
-				frameDuration = 1/4f
+				frameDuration = 60/244f
 			}
 			with<DogComponent>()
 		}

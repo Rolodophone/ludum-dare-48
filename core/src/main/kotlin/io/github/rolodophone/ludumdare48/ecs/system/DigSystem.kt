@@ -88,17 +88,17 @@ class DigSystem(
 				dogTileComp.xIndex -> { //digging down
 					dogAnimationComp.textureList = textures.dog_dig_down
 					dogAnimationComp.animIndex = 0
-					dogAnimationComp.frameDuration = 1/8f
+					dogAnimationComp.frameDuration = 60/488f
 				}
 				dogTileComp.xIndex - 1 -> { //digging left
 					dogAnimationComp.textureList = textures.dog_dig_left
 					dogAnimationComp.animIndex = 0
-					dogAnimationComp.frameDuration = 1/12f
+					dogAnimationComp.frameDuration = 60/732f
 				}
 				dogTileComp.xIndex + 1 -> { //digging right
 					dogAnimationComp.textureList = textures.dog_dig_right
 					dogAnimationComp.animIndex = 0
-					dogAnimationComp.frameDuration = 1/12f
+					dogAnimationComp.frameDuration = 60/732f
 				}
 			}
 		}
@@ -266,7 +266,7 @@ class DigSystem(
 			}
 			with<AnimationComponent> {
 				textureList = textures.tile_highlight
-				frameDuration = 1f
+				frameDuration = 60/61f
 			}
 			with<TileComponent> {
 				xIndex = x
