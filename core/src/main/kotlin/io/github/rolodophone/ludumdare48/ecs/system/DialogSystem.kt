@@ -100,6 +100,8 @@ class DialogSystem(
 		}
 
 		gameEventManager.listen(GameEvent.CloseDialog) {
+			if (dialog == null) return@listen
+
 			//remove dialog entity
 			engine.removeEntity(dialog)
 			dialog = null

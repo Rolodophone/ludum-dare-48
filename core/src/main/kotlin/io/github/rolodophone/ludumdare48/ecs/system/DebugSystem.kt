@@ -39,7 +39,7 @@ class DebugSystem(
 			if (!debuggingEnabled) {
 				debuggingEnabled = true
 				gameEventManager.trigger(GameEvent.ShowDialog.apply {
-					message = listOf("Enabled debugging.")
+					message = listOf("Enabled debugging. (May cause", "errors.)")
 					actionText = "Tap to continue."
 					effect = { }
 				})

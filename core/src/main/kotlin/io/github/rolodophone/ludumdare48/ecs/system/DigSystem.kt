@@ -214,7 +214,9 @@ class DigSystem(
 
 			//descending level
 			if (dogTileComp.yIndex % LEVEL_HEIGHT == 0 && dogTileComp.yIndex != NUM_ROWS && dogTileComp.yIndex != 0) {
-				gameEventManager.trigger(GameEvent.DescendLevel)
+				if (level == 1) { //temp fix for error
+					gameEventManager.trigger(GameEvent.DescendLevel)
+				}
 			}
 
 			if (tileHighlights.isEmpty()) {
